@@ -1,8 +1,8 @@
 'use strict';
 
-const apiKey = "a45fabad12cf4d32baded670685ff29e"
+const apiKey = "1e03aa605c2548559f2202802192505";
 
-const searchURL = 'https://newsapi.org/v2/everything';
+const searchURL = 'https://api.apixu.com/v1/current.json';
 
 
 function formatQueryParams(params) {
@@ -11,22 +11,22 @@ function formatQueryParams(params) {
   return queryItems.join('&');
 }
 
-function getMusic(query, maxResults=10) {
+function getMusic(query) {
   const params = {
     q: query,
-    language: "en",
+    key: "1e03aa605c2548559f2202802192505",
   };
   const queryString = formatQueryParams(params)
   const url = searchURL + '?' + queryString;
 
   console.log(url);
   
-  const options = {
-    headers: new Headers({
-      "X-Api-Key": apiKey})
-  };
+//   const options = {
+//     headers: new Headers({
+//       "key": apiKey})
+//   };
 
-  fetch(url, options)
+  fetch(url)
     .then(response => response.json())
     .then(responseJson => console.log(responseJson));
 }
@@ -35,8 +35,7 @@ function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
     const location = $('#js-location').val();
-    const maxResults = $('#js-max-results').val();
-    getMusic(location, maxResults);
+    getMusic(location);
   });
 }
 
