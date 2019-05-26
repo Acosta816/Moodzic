@@ -40,3 +40,9 @@
   .hidden {
     display: none;
   }
+
+  body{
+    background-image: url("https://cdn.dribbble.com/users/1209414/screenshots/4468735/earth.gif");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }

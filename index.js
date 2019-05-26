@@ -1,40 +1,43 @@
 'use strict';
 
-const apiKey = "";
+const weatherApiKey = "1e03aa605c2548559f2202802192505";
 
 const searchURL = 'https://api.apixu.com/v1/current.json';
 
 
-function formatQueryParams(params) {
-  const queryItems = Object.keys(params)
-    .map(key => `${key}=${params[key]}`)
+function formatQueryParams(parameters) {
+  const queryItems = Object.keys(parameters)
+    .map(key => `${key}=${parameters[key]}`)
   return queryItems.join('&');
 }
 
-async function getMusic(query) {
-  const params = {
+async function getLocationWeather(query) {
+  const weatherParams = {
     q: query,
-    key: "",
+    key: weatherApiKey,
   };
 
-  const queryString = formatQueryParams(params)
-  const url = searchURL + '?' + queryString;
+  const queryString = formatQueryParams(weatherParams)
+  const finalWeatherUrl = searchURL + '?' + queryString;
 
-  console.log(url);
-  
-//   const options = {
-//     headers: new Headers({
-//       "key": apiKey})
-//   };
+  console.log(finalWeatherUrl);
 
   try {
-    const response = await fetch (url);
+    const response = await fetch (finalWeatherUrl);
     const responseJson = await response.json();
+    console.log(`Here is the weather info: ${responseJson.location.name}`);
+    //renderHtml(responseJson);
+
     displayLocation(responseJson);
   } 
   catch(err) {
     console.log('error message');
   }
+}
+
+/*David ------------------------------------------------------------------------------------------------------------*/
+function renderHtml(jsonObject){
+  
 }
 
 function displayLocation (jsonData) {
@@ -80,7 +83,7 @@ function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
     const location = $('#js-location').val();
-    getMusic(location);
+    getLocationWeather(location);
   });
 }
 
