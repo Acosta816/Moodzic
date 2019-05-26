@@ -1,7 +1,5 @@
 'use strict';
 
-const apiKey = "";
-
 const searchURL = 'https://api.apixu.com/v1/current.json';
 
 
@@ -14,18 +12,11 @@ function formatQueryParams(params) {
 async function getMusic(query) {
   const params = {
     q: query,
-    key: "",
+    key: config.weatherApiKey
   };
 
   const queryString = formatQueryParams(params)
   const url = searchURL + '?' + queryString;
-
-  console.log(url);
-  
-//   const options = {
-//     headers: new Headers({
-//       "key": apiKey})
-//   };
 
   try {
     const response = await fetch (url);
@@ -57,7 +48,7 @@ async function fetchYelp (lat, lon) {
   const yelpUrl = `${searchUrl}?${yelpParam}`;
   const authorization = {
     headers: new Headers({
-      'Authorization': 'Bearer rKBleUfKJSjnRt4heyZ3KL_j1BOMSuKlZcev_lm1RlCDi9r3zXh-VVzOLAyHiUi3X8Kp_m4mqMtunsQwKeU6fIUJu1EogqIsZqCZP1kYYgeEqS59f1V8O3UUaKHpXHYx'
+      'Authorization': `Bearer ${config.yelpApiKey}`
     })
   }
 
@@ -68,12 +59,26 @@ async function fetchYelp (lat, lon) {
     renderResult(responseJson);
   }
   catch(err) {
-    console.log('error message');
+    console.log('error message', err);
   }
 }
 
 function renderResult (responseJson) {
-  responseJson.map(data => console.log(data))
+  const result = responseJson.businesses.map(data => `
+  <li> 
+    <img src="${data.image_url}" alt="">
+    <h1>Name: ${data.name}</h1>
+    <h2>Address: ${(data.location.display_address).join('')}</h2>
+    <p>Rating: ${data.rating}</p>
+    <a href="${data.url}">Yelp reviews</a>
+  </li>
+  `);
+
+  displayResult(result);
+}
+
+function displayResult (data) {
+  $('.result').html(data);
 }
 
 function watchForm() {
