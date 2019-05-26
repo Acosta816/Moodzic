@@ -1,6 +1,6 @@
 'use strict';
 
-const apiKey = "b1168a00b5924ba68e2200452192505";
+const apiKey = "";
 
 const searchURL = 'https://api.apixu.com/v1/current.json';
 
@@ -14,7 +14,7 @@ function formatQueryParams(params) {
 async function getMusic(query) {
   const params = {
     q: query,
-    key: "b1168a00b5924ba68e2200452192505",
+    key: "",
   };
 
   const queryString = formatQueryParams(params)
