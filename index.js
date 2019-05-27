@@ -26,7 +26,7 @@ async function getLocationWeather(query) {
     const response = await fetch (finalWeatherUrl);
     const responseJson = await response.json();
     console.log(`Here is the weather info: ${responseJson.location.name}`);
-    //renderHtml(responseJson);
+    renderHtml(responseJson);
 
     displayLocation(responseJson);
   } 
@@ -37,7 +37,8 @@ async function getLocationWeather(query) {
 
 /*David ------------------------------------------------------------------------------------------------------------*/
 function renderHtml(jsonObject){
-  
+  console.log('here' +jsonObject.location.name);
+  $('.screens').html(`<h2>Here is the weather info: ${jsonObject.location.name}</h2>`);
 }
 
 function displayLocation (jsonData) {
@@ -88,3 +89,44 @@ function watchForm() {
 }
 
 $(watchForm);
+
+
+
+
+
+
+/*David--------------------------------------------------------------------------------------------------------------------------------------*/
+let appTitle = $('.le-projects'); //This code cycles through the RBB values of the shadow-text changing their colors over time
+
+        function runColorsAnm(){
+                      //orange to blood orange slowly then to white flash large radius, then back down to 
+        $({'r':27,'g':213,'b':255, }).animate({'r':31,'g':255,'b':69},{queue:false,duration:3000, easing:'swing',
+          step: function(now) {
+            appTitle.css('text-shadow', '0 0 9px rgb('+this.r+','+this.g+','+this.b+')');
+            
+            // appTitle.css({r:this.r});
+          }, complete:function(){
+            $({'r':31,'g':255,'b':69}).animate({'r':255,'g':15,'b':15},{queue:false,duration:3000, easing:'swing',
+              step: function(now) {
+                  appTitle.css('text-shadow', '0 0 9px rgb('+this.r+','+this.g+','+this.b+')');
+                  // appTitle.css({r:this.r});
+              }, complete:function(){
+                $({'r':255,'g':15,'b':15}).animate({'r':255,'g':15,'b':248},{queue:false,duration:3000, easing:'swing',
+                  step: function(now) {
+                      appTitle.css('text-shadow', '0 0 9px rgb('+this.r+','+this.g+','+this.b+')');
+                      
+                      // appTitle.css({r:this.r});
+                  }, complete:function(){
+                      //loop here 
+                      console.log('restart');
+                      runColorsAnm();
+                  } //NEXT-SUB-SEQUENCE-.
+                });
+              } //NEXT-SUB-SEQUENCE-.
+            });
+          } //NEXT-SUB-SEQUENCE-.
+        });
+        
+        };//endloop
+
+        runColorsAnm(); //iife immediately invoked function event
