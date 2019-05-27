@@ -39,15 +39,18 @@ async function getLocationWeather(query) {
 function renderHtml(jsonObject){
   console.log('here' +jsonObject.location.name);
    
-    let screenInjection = `<div class="placeAndDate">
-                           <h3>${jsonObject.location.name}, ${jsonObject.location.region}<h3>
-                           <p>${jsonObject.location.localtime}, ${jsonObject.current.condition.text} </p>
-                           </div>
-                           <div class="tempAndIcon">
-                          <img src="${jsonObject.current.condition.icon}">
-                          <h2>
-                          </div>  
-                          `
+    let screenInjection = `
+                          <div class="weatherApiInfo">
+                            <div class="placeAndDate">
+                              <h3>${jsonObject.location.name}, ${jsonObject.location.region}<h3>
+                              <p>${jsonObject.location.localtime}, <span>${jsonObject.current.condition.text}</span> </p>
+                            </div>
+                            <div class="tempAndIcon">
+                              <img src="${jsonObject.current.condition.icon}">
+                              <h2>${jsonObject.current.temp_f}F</h2>
+                            </div>  
+                          </div>
+                          `;
 
 
 
@@ -83,7 +86,20 @@ async function fetchYelp (lat, lon) {
     const response = await fetch(yelpUrl, authorization);
     const responseJson = await response.json();
     console.log(responseJson);
+    console.log(`here you goooo ${responseJson.businesses.length}`);
+    
+    for(let i = 0; i< responseJson.businesses.length; i++ ){
+    $('.screens').append(`<div class ="flexBoxish"><p>${responseJson.businesses[i].name}</p>
+                          <img class="yelpImg" src="${responseJson.businesses[i].image_url}" >
+                          </div>`); //This is just temporary
+    
+    //David-----------------------------------
+    //$('footer').html(displayYelpStuff(responseJson));
+    //David-------------------------------------
+    }
+
     renderResult(responseJson);
+
   }
   catch(err) {
     console.log('error message');
@@ -91,8 +107,19 @@ async function fetchYelp (lat, lon) {
 }
 
 function renderResult (responseJson) {
-  responseJson.map(data => console.log(data))
+  responseJson.map(data => console.log(data));
+  
 }
+
+//----------------------------------TODO***GET THIS WORKING TO PUSH OVER TO STORE
+function displayYelpStuff(someData){
+  console.log(`here you goooo ${someData.businesses[0].alias}`);
+  let yelpInjection = `<p>${someData.businesses[0].alias}</p>`;
+
+  return yelpInjection;
+}
+/*--------------------*/
+
 
 function watchForm() {
   $('form').submit(event => {
@@ -110,37 +137,37 @@ $(watchForm);
 
 
 /*David--------------------------------------------------------------------------------------------------------------------------------------*/
-let appTitle = $('.le-projects'); //This code cycles through the RBB values of the shadow-text changing their colors over time
+// let appTitle = $('.le-projects'); //This code cycles through the RBB values of the shadow-text changing their colors over time
 
-        function runColorsAnm(){
-                      //orange to blood orange slowly then to white flash large radius, then back down to 
-        $({'r':27,'g':213,'b':255, }).animate({'r':31,'g':255,'b':69},{queue:false,duration:3000, easing:'swing',
-          step: function(now) {
-            appTitle.css('text-shadow', '0 0 9px rgb('+this.r+','+this.g+','+this.b+')');
+//         function runColorsAnm(){
+//        
+//         $({'r':27,'g':213,'b':255, }).animate({'r':31,'g':255,'b':69},{queue:false,duration:3000, easing:'swing',
+//           step: function(now) {
+//             appTitle.css('text-shadow', '0 0 9px rgb('+this.r+','+this.g+','+this.b+')');
             
-            // appTitle.css({r:this.r});
-          }, complete:function(){
-            $({'r':31,'g':255,'b':69}).animate({'r':255,'g':15,'b':15},{queue:false,duration:3000, easing:'swing',
-              step: function(now) {
-                  appTitle.css('text-shadow', '0 0 9px rgb('+this.r+','+this.g+','+this.b+')');
-                  // appTitle.css({r:this.r});
-              }, complete:function(){
-                $({'r':255,'g':15,'b':15}).animate({'r':255,'g':15,'b':248},{queue:false,duration:3000, easing:'swing',
-                  step: function(now) {
-                      appTitle.css('text-shadow', '0 0 9px rgb('+this.r+','+this.g+','+this.b+')');
-                      
-                      // appTitle.css({r:this.r});
-                  }, complete:function(){
-                      //loop here 
-                      console.log('restart');
-                      runColorsAnm();
-                  } //NEXT-SUB-SEQUENCE-.
-                });
-              } //NEXT-SUB-SEQUENCE-.
-            });
-          } //NEXT-SUB-SEQUENCE-.
-        });
-        
-        };//endloop
 
-        runColorsAnm(); //iife immediately invoked function event
+//           }, complete:function(){
+//             $({'r':31,'g':255,'b':69}).animate({'r':255,'g':15,'b':15},{queue:false,duration:3000, easing:'swing',
+//               step: function(now) {
+//                   appTitle.css('text-shadow', '0 0 9px rgb('+this.r+','+this.g+','+this.b+')');
+      
+//               }, complete:function(){
+//                 $({'r':255,'g':15,'b':15}).animate({'r':255,'g':15,'b':248},{queue:false,duration:3000, easing:'swing',
+//                   step: function(now) {
+//                       appTitle.css('text-shadow', '0 0 9px rgb('+this.r+','+this.g+','+this.b+')');
+                      
+          
+//                   }, complete:function(){
+//                       //loop here 
+//                       console.log('restart');
+//                       runColorsAnm();
+//                   } //NEXT-SUB-SEQUENCE-.
+//                 });
+//               } //NEXT-SUB-SEQUENCE-.
+//             });
+//           } //NEXT-SUB-SEQUENCE-.
+//         });
+        
+//         };//endloop
+
+//         runColorsAnm(); //iife immediately invoked function event

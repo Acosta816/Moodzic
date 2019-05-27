@@ -25,16 +25,52 @@ html {
     background-attachment: scroll, fixed, fixed;
   }
 
+  .formContainer {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .weatherApiInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
 .placeAndDate {
   display: flex;
   flex-direction: column;
 }
 
+.placeAndDate span {
+  color: rgb(255, 208, 0);
+  font-weight: bold;
+}
+
+.placeAndDate h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 0.8rem;
+}
+.placeAndDate p {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 0.65rem;
+}
+
 .tempAndIcon{
     display: flex;
     flex-direction: row;
+    justify-self: end;
 }
 
+.tempAndIcon h2 {
+  margin-top: 0;
+}
+
+.tempAndIcon img {
+  margin-top: -17px;
+  padding-bottom: 8px;
+}
   
 .cloudName {
   z-index: -1;
@@ -142,15 +178,8 @@ picture {
 
 }
 
-.animal-quiz {
-  padding-left: 12px;
-  padding-right: 12px; 
-}
 
-.animal-quiz * {
-  background-color: #1c3e527a;
-  border-radius: 13px
-}
+
 
 .quiz-spec {
   font-size: 12px;
@@ -214,14 +243,6 @@ p, h3, h4 {
   text-align: left;
 }
 
-.app-title {
-  text-align: center;
-  text-decoration: underline;
-  color: rgb(255, 255, 255);
-  font-size: 2rem;
-  text-shadow: 2px 2px 7px black;
-}
-
 .date {
   text-align: center;
 }
@@ -241,12 +262,23 @@ input {
 .screens  {
   display:flex;
   flex-flow: column;
+  padding: 10px 7px;
   border: 3px solid #000000c4;
   border-radius:13px;
   box-shadow:0 0 15px 9px #0cf4ff9c;
   width:100%;
-  height: 19rem;
+  height: auto;
   background-color: #1c3e527a;
+  }
+
+  .yelpImg {
+    width: 20%;
+  }
+
+  .flexBoxish {
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
   }
 
 
@@ -270,18 +302,12 @@ input {
       font-size: 2.5rem;
   }
 
-  .quiz-spec, .quiz-spec a {
-      font-size: 0.9rem;
-  }
+  
 
   h1 {
       font-size: 1.5rem;
   }
-  .good-day {
-  font-family: 'Pacifico', cursive;
-  font-size:2.2rem;
-
-  }
+  
 
   h3 {
       font-size:2rem;
@@ -301,51 +327,16 @@ input {
 }
 
 @media(min-width:800px){
-  main {
-      padding: 80px;
-  }
-  p {
-      font-size: 1.5rem;
-      line-height:1.5;
-      text-align: left;
-  }
-
-  .le-projects{
-      font-size: 3.5rem;
-  }
-
-  .app-title {
-      text-align: center;
-      text-decoration: underline;
-      color: rgb(255, 255, 255);
-      font-size: 3rem;
-  }
-
-  .quiz-spec, .quiz-spec a  {
-      font-size: 1.1rem;
-  }
-
-   .screens img {
-      display: inline-block;
-      width: 50%;
-      height: 50%;
-  }
-  .screens{
-      flex-direction:row;
-  }
-
-  nav {
-      flex-direction:row;
-      justify-content: space-evenly;
-      margin-top: 85px;
-      margin-bottom: 50px;
-      
-  }
-
-  footer h3{
-      font-size: 2.5rem;
-  }
-
+      main {
+          padding: 80px;
+      }
+      .clouds {
+        top:-192px;
+        width:41%;
+        left:40%;
+        z-index: 0;
+      }
+  
   
 }
   
