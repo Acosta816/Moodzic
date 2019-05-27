@@ -65,13 +65,13 @@ async function fetchYelp (lat, lon) {
 
 function renderResult (responseJson) {
   const result = responseJson.businesses.map(data => `
-  <li> 
-    <img src="${data.image_url}" alt="">
-    <h1>Name: ${data.name}</h1>
-    <h2>Address: ${(data.location.display_address).join('')}</h2>
-    <p>Rating: ${data.rating}</p>
-    <a href="${data.url}">Yelp reviews</a>
-  </li>
+    <li> 
+      <img src="${data.image_url}" alt="">
+      <h1>Name: ${data.name}</h1>
+      <h2>Address: ${(data.location.display_address).join('')}</h2>
+      <p>Rating: ${data.rating}</p>
+      <a href="${data.url}">Yelp reviews</a>
+    </li>
   `);
 
   displayResult(result);
