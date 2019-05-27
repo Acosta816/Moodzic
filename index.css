@@ -25,6 +25,16 @@ html {
     background-attachment: scroll, fixed, fixed;
   }
 
+.placeAndDate {
+  display: flex;
+  flex-direction: column;
+}
+
+.tempAndIcon{
+    display: flex;
+    flex-direction: row;
+}
+
   
 .cloudName {
   z-index: -1;

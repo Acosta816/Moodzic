@@ -26,7 +26,7 @@ async function getLocationWeather(query) {
     const response = await fetch (finalWeatherUrl);
     const responseJson = await response.json();
     console.log(`Here is the weather info: ${responseJson.location.name}`);
-    renderHtml(responseJson);
+    $('.screens').html(renderHtml(responseJson));
 
     displayLocation(responseJson);
   } 
@@ -38,9 +38,23 @@ async function getLocationWeather(query) {
 /*David ------------------------------------------------------------------------------------------------------------*/
 function renderHtml(jsonObject){
   console.log('here' +jsonObject.location.name);
-  $('.screens').html(`<h2>Here is the weather info: ${jsonObject.location.name}</h2>`);
-}
+   
+    let screenInjection = `<div class="placeAndDate">
+                           <h3>${jsonObject.location.name}, ${jsonObject.location.region}<h3>
+                           <p>${jsonObject.location.localtime}, ${jsonObject.current.condition.text} </p>
+                           </div>
+                           <div class="tempAndIcon">
+                          <img src="${jsonObject.current.condition.icon}">
+                          <h2>
+                          </div>  
+                          `
 
+
+
+    return screenInjection;
+  
+}
+/*David----------------------------------------------------------------------------------------------------------------------*/
 function displayLocation (jsonData) {
   const lat = jsonData.location.lat;
   const lon = jsonData.location.lon;
