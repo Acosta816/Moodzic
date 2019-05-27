@@ -14,6 +14,7 @@ async function getLocationWeather(query) {
     key: config.weatherApiKey
   };
 
+  console.log(config.weatherApiKey);
   const queryString = formatQueryParams(weatherParams)
   const finalWeatherUrl = searchURL + '?' + queryString;
 
