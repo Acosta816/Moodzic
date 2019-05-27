@@ -2,32 +2,54 @@
 
 const searchURL = 'https://api.apixu.com/v1/current.json';
 
-
-function formatQueryParams(params) {
-  const queryItems = Object.keys(params)
-    .map(key => `${key}=${params[key]}`)
+function formatQueryParams(parameters) {
+  const queryItems = Object.keys(parameters)
+    .map(key => `${key}=${parameters[key]}`);
   return queryItems.join('&');
 }
 
-async function getMusic(query) {
-  const params = {
+async function getLocationWeather(query) {
+  const weatherParams = {
     q: query,
     key: config.weatherApiKey
   };
 
-  const queryString = formatQueryParams(params)
-  const url = searchURL + '?' + queryString;
+  const queryString = formatQueryParams(weatherParams)
+  const finalWeatherUrl = searchURL + '?' + queryString;
 
   try {
-    const response = await fetch (url);
+    const response = await fetch (finalWeatherUrl);
     const responseJson = await response.json();
+    console.log(`Here is the weather info: ${responseJson.location.name}`);
+    $('.screens').html(renderHtml(responseJson));
+
     displayLocation(responseJson);
-  } 
+  }
   catch(err) {
     console.log('error message');
   }
 }
 
+/*David ------------------------------------------------------------------------------------------------------------*/
+function renderHtml(jsonObject){
+  console.log('here' +jsonObject.location.name);
+
+  let screenInjection = `
+                          <div class="weatherApiInfo">
+                            <div class="placeAndDate">
+                              <h3>${jsonObject.location.name}, ${jsonObject.location.region}<h3>
+                              <p>${jsonObject.location.localtime}, <span>${jsonObject.current.condition.text}</span> </p>
+                            </div>
+                            <div class="tempAndIcon">
+                              <img src="${jsonObject.current.condition.icon}">
+                              <h2>${jsonObject.current.temp_f}F</h2>
+                            </div>  
+                          </div>
+                          `;
+
+  return screenInjection;
+}
+/*David----------------------------------------------------------------------------------------------------------------------*/
 function displayLocation (jsonData) {
   const lat = jsonData.location.lat;
   const lon = jsonData.location.lon;
@@ -56,6 +78,18 @@ async function fetchYelp (lat, lon) {
     const response = await fetch(yelpUrl, authorization);
     const responseJson = await response.json();
     console.log(responseJson);
+    console.log(`here you goooo ${responseJson.businesses.length}`);
+
+    for(let i = 0; i< responseJson.businesses.length; i++ ){
+      $('.screens').append(`<div class ="flexBoxish"><p>${responseJson.businesses[i].name}</p>
+                          <img class="yelpImg" src="${responseJson.businesses[i].image_url}" >
+                          </div>`); //This is just temporary
+
+    //David-----------------------------------
+    //$('footer').html(displayYelpStuff(responseJson));
+    //David-------------------------------------
+    }
+
     renderResult(responseJson);
   }
   catch(err) {
@@ -64,29 +98,58 @@ async function fetchYelp (lat, lon) {
 }
 
 function renderResult (responseJson) {
-  const result = responseJson.businesses.map(data => `
-    <li> 
-      <img src="${data.image_url}" alt="">
-      <h1>Name: ${data.name}</h1>
-      <h2>Address: ${(data.location.display_address).join('')}</h2>
-      <p>Rating: ${data.rating}</p>
-      <a href="${data.url}">Yelp reviews</a>
-    </li>
-  `);
-
-  displayResult(result);
+  responseJson.map(data => console.log(data));
 }
 
-function displayResult (data) {
-  $('.result').html(data);
+//----------------------------------TODO***GET THIS WORKING TO PUSH OVER TO STORE
+function displayYelpStuff(someData){
+  console.log(`here you goooo ${someData.businesses[0].alias}`);
+  let yelpInjection = `<p>${someData.businesses[0].alias}</p>`;
+
+  return yelpInjection;
 }
+/*--------------------*/
 
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
     const location = $('#js-location').val();
-    getMusic(location);
+    getLocationWeather(location);
   });
 }
 
 $(watchForm);
+
+/*David--------------------------------------------------------------------------------------------------------------------------------------*/
+// let appTitle = $('.le-projects'); //This code cycles through the RBB values of the shadow-text changing their colors over time
+
+//         function runColorsAnm(){
+//
+//         $({'r':27,'g':213,'b':255, }).animate({'r':31,'g':255,'b':69},{queue:false,duration:3000, easing:'swing',
+//           step: function(now) {
+//             appTitle.css('text-shadow', '0 0 9px rgb('+this.r+','+this.g+','+this.b+')');
+
+//           }, complete:function(){
+//             $({'r':31,'g':255,'b':69}).animate({'r':255,'g':15,'b':15},{queue:false,duration:3000, easing:'swing',
+//               step: function(now) {
+//                   appTitle.css('text-shadow', '0 0 9px rgb('+this.r+','+this.g+','+this.b+')');
+
+//               }, complete:function(){
+//                 $({'r':255,'g':15,'b':15}).animate({'r':255,'g':15,'b':248},{queue:false,duration:3000, easing:'swing',
+//                   step: function(now) {
+//                       appTitle.css('text-shadow', '0 0 9px rgb('+this.r+','+this.g+','+this.b+')');
+
+//                   }, complete:function(){
+//                       //loop here
+//                       console.log('restart');
+//                       runColorsAnm();
+//                   } //NEXT-SUB-SEQUENCE-.
+//                 });
+//               } //NEXT-SUB-SEQUENCE-.
+//             });
+//           } //NEXT-SUB-SEQUENCE-.
+//         });
+
+//         };//endloop
+
+//         runColorsAnm(); //iife immediately invoked function event
