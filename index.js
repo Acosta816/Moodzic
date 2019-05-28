@@ -31,7 +31,7 @@ async function getLocationWeather(query) {
     displayLocation(responseJson);
   }
   catch(err) {
-    console.log('error message');
+    console.error(err);
   }
 }
 
@@ -58,13 +58,14 @@ function renderHtml(jsonObject){
 function displayLocation (jsonData) {
   const lat = jsonData.location.lat;
   const lon = jsonData.location.lon;
-  fetchYelp(lat,lon);
+  const category = checkWeather(jsonData);
+  fetchYelp(lat, lon, category[0], category[1]);
 }
 
-async function fetchYelp (lat, lon) {
+async function fetchYelp (lat, lon, category, term) {
   const param = {
-    term: 'food',
-    categories: 'cafes',
+    term: term,
+    categories: category,
     limit: 4,
     latitude: lat,
     longitude: lon
@@ -98,8 +99,16 @@ async function fetchYelp (lat, lon) {
     renderResult(responseJson);
   }
   catch(err) {
-    console.log('error message', err);
+    console.log(err);
   }
+}
+
+
+function checkWeather(responseJson){
+  if (responseJson.current.condition.code < 1010 && responseJson.current.temp_f > 38){
+    return ['parks', 'parks'];
+  } 
+  return ['cafe', 'food'];
 }
 
 function renderResult (responseJson) {
