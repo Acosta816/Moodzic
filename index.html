@@ -6,14 +6,30 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Music Finder</title>
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="playList.css">
     <script type='text/javascript' src='config.js'></script>
     <link href="https://fonts.googleapis.com/css?family=Comfortaa:300" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script type='text/javascript' src='playList.js'></script>
 </head>
+
+<!-- MUSIC SIDE NAV _begin**-->
+<div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <img class="playListClimate" id="playListClimate" src="images\shot2.png"> <h4 class = "playListTitle">Playlist</h4>
+        <a href="#">track#1</a>
+        <a href="#">track#2</a>
+        <a href="#">track#3</a>
+        <a href="#">track#4</a>
+      </div>
+<!-- MUSIC SIDE NAV _end**-->
+
 <body>
 
         <main role="main" class="site">
+
+                <span id="playListOpen" onclick="openNav()">☰ music</span>
         
                 <section>
                     <h2 class="le-projects">Moodzic

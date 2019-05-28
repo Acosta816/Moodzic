@@ -21,9 +21,13 @@ async function getLocationWeather(query) {
   try {
     const response = await fetch (finalWeatherUrl);
     const responseJson = await response.json();
-    console.log(`Here is the weather info: ${responseJson.location.name}`);
+//---------------------------------------------------------------------------------------------------------Playlist Title_start
+    let iconVal = responseJson.current.condition.icon; //assigning the weather icon to the playlist header
+    let textVal = responseJson.current.condition.text; //assigning the weather text to the playlist header
+    $('#playListClimate').closest('img').attr('src',iconVal);
+    $('#mySidenav').find('h4').text(`${textVal} Playlist`);
+//---------------------------------------------------------------------------------------------------------Playlist Title_end
     $('.screens').html(renderHtml(responseJson));
-
     displayLocation(responseJson);
   }
   catch(err) {
