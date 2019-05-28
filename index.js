@@ -1,29 +1,26 @@
 'use strict';
 
-const searchURL = 'https://api.apixu.com/v1/current.json';
-
-function formatQueryParams(parameters) {
+function formatQueryParams (parameters) {
   const queryItems = Object.keys(parameters)
     .map(key => `${key}=${parameters[key]}`);
   return queryItems.join('&');
 }
 
-async function getLocationWeather(query) {
+async function getLocationWeather (query) {
   const weatherParams = {
     q: query,
     key: config.weatherApiKey
   };
 
-  console.log(config.weatherApiKey);
   const queryString = formatQueryParams(weatherParams)
+  const searchURL = 'https://api.apixu.com/v1/current.json';
   const finalWeatherUrl = searchURL + '?' + queryString;
 
   try {
     const response = await fetch (finalWeatherUrl);
     const responseJson = await response.json();
-    console.log(`Here is the weather info: ${responseJson.location.name}`);
     $('.screens').html(renderHtml(responseJson));
-
+    fetchSpotifyToken();
     displayLocation(responseJson);
   }
   catch(err) {
@@ -31,30 +28,28 @@ async function getLocationWeather(query) {
   }
 }
 
-/*David ------------------------------------------------------------------------------------------------------------*/
-function renderHtml(jsonObject){
-  console.log('here' +jsonObject.location.name);
+function renderHtml (jsonObject) {
 
-  let screenInjection = `
-                          <div class="weatherApiInfo">
-                            <div class="placeAndDate">
-                              <h3>${jsonObject.location.name}, ${jsonObject.location.region}<h3>
-                              <p>${jsonObject.location.localtime}, <span>${jsonObject.current.condition.text}</span> </p>
-                            </div>
-                            <div class="tempAndIcon">
-                              <img src="${jsonObject.current.condition.icon}">
-                              <h2>${jsonObject.current.temp_f}F</h2>
-                            </div>  
-                          </div>
-                          `;
-
+  let screenInjection =
+  `
+  <div class="weatherApiInfo">
+    <div class="placeAndDate">
+      <h3>${jsonObject.location.name}, ${jsonObject.location.region}<h3>
+      <p>${jsonObject.location.localtime}, <span>${jsonObject.current.condition.text}</span> </p>
+    </div>
+    <div class="tempAndIcon">
+      <img src="${jsonObject.current.condition.icon}">
+      <h2>${jsonObject.current.temp_f}F</h2>
+    </div>  
+  </div>
+   `;
   return screenInjection;
 }
-/*David----------------------------------------------------------------------------------------------------------------------*/
+
 function displayLocation (jsonData) {
   const lat = jsonData.location.lat;
   const lon = jsonData.location.lon;
-  fetchYelp(lat,lon);
+  fetchYelp(lat, lon);
 }
 
 async function fetchYelp (lat, lon) {
@@ -70,16 +65,14 @@ async function fetchYelp (lat, lon) {
   const searchUrl = 'https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search';
   const yelpUrl = `${searchUrl}?${yelpParam}`;
   const authorization = {
-    headers: new Headers({
+    headers: new Headers ({
       'Authorization': `Bearer ${config.yelpApiKey}`
     })
   }
 
   try {
-    const response = await fetch(yelpUrl, authorization);
+    const response = await fetch (yelpUrl, authorization);
     const responseJson = await response.json();
-    console.log(responseJson);
-    console.log(`here you goooo ${responseJson.businesses.length}`);
 
     for(let i = 0; i< responseJson.businesses.length; i++ ){
       $('.screens').append(`<div class ="flexBoxish"><p>${responseJson.businesses[i].name}</p>
@@ -111,7 +104,12 @@ function displayYelpStuff(someData){
 }
 /*--------------------*/
 
-function watchForm() {
+
+
+
+
+
+function watchForm () {
   $('form').submit(event => {
     event.preventDefault();
     const location = $('#js-location').val();
