@@ -29,6 +29,7 @@ async function getLocationWeather(query) {
 //---------------------------------------------------------------------------------------------------------Playlist Title_end
     $('.screens').html(renderHtml(responseJson));
     displayLocation(responseJson);
+    checkWeather(responseJson);
   }
   catch(err) {
     console.log('error message');
@@ -99,6 +100,15 @@ async function fetchYelp (lat, lon) {
   }
   catch(err) {
     console.log('error message', err);
+  }
+}
+
+
+function checkWeather(responseJson){
+  if (responseJson.current.condition.code < 1010 && responseJson.current.temp_f > 38){
+    console.log("Weather is Good");
+  } else {
+    console.log("Weather is Bad");
   }
 }
 
