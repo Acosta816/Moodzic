@@ -1,3 +1,8 @@
+const store = {
+  good: 'artist',
+  bad: 'artist'
+}
+
 function fetchSpotifyToken () {
   const settings = {
     "async": true,
@@ -18,27 +23,107 @@ function fetchSpotifyToken () {
     }
   }
   $.ajax(settings).done(function (response) {
-    console.log(response.access_token);
+    getSpotifyArtist(response);
   });
-
-  getSpotifyArtist();
 }
 
-function getSpotifyArtist () {
-  var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": "https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/artists/0Y0QSi6lz1bPik5Ffjr8sd",
-    "method": "GET",
-    "headers": {
-      "Accept": "application/json",
-      "Authorization": "Bearer BQCwhmuh6RzHXv6RFYhk8sSG1uRB75zBDWmUFO2gkcZZwTbCDevhqjYpLPkoI4Kk5fQOG0zsquZ5TlDTTqIXy_65UF99h4zyy22_j7-jcuEaIBBTEsU7cXLhdki_FJHWlv0V1km3pOopO3mG5ShW3c50cbnmIvTeqJHy3RGdc3W2hJ64dL8P_1pDWBG8BL_9_T0jwF4vfw",
-      "cache-control": "no-cache",
-      "Postman-Token": "6eb9baf5-ef28-4828-ae43-cc19abcdc28f"
+async function getSpotifyArtist (response) {
+  const authorization = {
+    headers: new Headers ({
+      'Authorization': `Bearer ${response.access_token}`
+    })
+  }
+  try {
+    const newResponse = await fetch (`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/artists/0Y0QSi6lz1bPik5Ffjr8sd`, authorization);
+    const artistResponse = await newResponse.json();
+    getRelatedArtists(response, artistResponse);
+  }
+  catch(err) {
+    console.log('error', err);
+  }
+
+
+}
+
+async function getRelatedArtists (token, artist) {
+  const authorization = {
+    headers: {
+      'Authorization': `Bearer ${token.access_token}`
     }
   }
-  
-  $.ajax(settings).done(function (response) {
-    console.log(response.external_urls.spotify);
-  });
+
+  try {
+    const response = await fetch (`https://api.spotify.com/v1/artists/${artist.id}/related-artists`, authorization);
+    const artists = await response.json();
+    createPlayList(token, artists);
+  }
+  catch(err) {
+    console.log('error', err);
+  }
+}
+
+async function createPlayList (token, artists) {
+  const authorization = {
+    method: 'POST',
+    body: JSON.stringify({name: "test", public: false}),
+    headers: {
+      'Accept': `application/json`,
+      'Authorization': `Bearer ${token.access_token}`,
+      'Content-Type': `application/json`
+    }
+  }
+  try {
+    const response = await fetch ('https://api.spotify.com/v1/users/1224174868/playlists', authorization);
+    const playList = await response.json();
+    getArtistTopTracks(token, artists, playList);
+  }
+  catch(err) {
+    console.log(err);
+  }
+}
+
+async function getArtistTopTracks (token, artists, playList) {
+  const artistId = artists.artists.map(artistId => artistId.id).join(', ');
+  console.log(artistId);
+  const authorization = {
+    headers: {
+      'Authorization': `Bearer ${token.access_token}`,
+      'Accept': 'application/json'
+    }
+  }
+
+  try {
+    const response = await fetch (`https://api.spotify.com/v1/artists/1kwGj7uDO5WXVXtQLvGJr0/top-tracks?country=US`, authorization);
+    const artistTopTrack = await response.json();
+    addTracks(token, playList, artistTopTrack);
+  }
+  catch(err) {
+    console.log(err);
+  }
+}
+
+async function addTracks (token, playList, artistTopTrack) {
+  const uri = artistTopTrack.tracks.map(trackuri => `uris=${trackuri.uri}`).join('&');
+  const playListId = playList.id;
+  const authorization = {
+    method: 'POST',
+    headers: {
+      'Accept': `application/json`,
+      'Authorization': `Bearer ${token.access_token}`,
+      'Content-Type': `application/json`
+    }
+  }
+
+  try {
+    const response = await fetch (`https://api.spotify.com/v1/users//playlists/${playListId}/tracks?uris=spotify:track:3mof6Z6vz6gonsuIEQXank`, authorization);
+    const completePlayList = await response.json();
+    appendMusic(playListId)
+  }
+  catch(err) {
+    console.log(err);
+  }
+}
+
+function appendMusic(playListId) {
+  $('.sidenav').html(`<iframe src="https://open.spotify.com/embed/user/1224174868/playlist/${playListId}" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`)
 }

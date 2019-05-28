@@ -22,10 +22,18 @@ async function getLocationWeather (query) {
     $('.screens').html(renderHtml(responseJson));
     fetchSpotifyToken();
     displayLocation(responseJson);
+    assignPlayListHeader(responseJson);
   }
   catch(err) {
-    console.log('error message');
+    console.log('error message', err);
   }
+}
+
+function assignPlayListHeader (responseJson) {
+  let iconVal = responseJson.current.condition.icon; //assigning the weather icon to the playlist header
+  let textVal = responseJson.current.condition.text; //assigning the weather text to the playlist header
+  $('#playListClimate').closest('img').attr('src',iconVal);
+  $('#mySidenav').find('h4').text(`${textVal} Playlist`);
 }
 
 function renderHtml (jsonObject) {

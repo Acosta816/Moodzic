@@ -7,7 +7,6 @@ html {
   background-color: #1a2661;
 }
   
-  
   body {
     margin: 0;
     padding: 0;
@@ -17,7 +16,7 @@ html {
                       url("https://cdn.dribbble.com/users/1209414/screenshots/4468735/earth.gif"),
                       url("https://media.giphy.com/media/xB2huFLKz1SeMFO4w2/giphy.gif"),
                       url("https://media.giphy.com/media/xB2huFLKz1SeMFO4w2/giphy.gif");
-    background-position: bottom ,top left, center right;
+    background-position: bottom ,top right, center left;
     background-repeat: no-repeat, no-repeat, no-repeat;
     background-size: auto 80%, 15%, 10%;
     text-align: center;
