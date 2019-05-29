@@ -63,8 +63,10 @@ function displayLocation () {
     const searchValue =  `${category[1]},${category[3]}`
     let limit = 6;
     fetchYelp(lat, lon, searchValue, term, limit);
+  } else {
+    fetchYelp(lat, lon, category[0], category[1], limit);
   }
-  fetchYelp(lat, lon, category[0], category[1], limit);
+  
 }
 
 async function fetchYelp (latitude, longitude, categories, term, limit) {
