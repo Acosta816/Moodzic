@@ -1,6 +1,6 @@
 'use strict';
 
-const searchURL = 'https://api.apixu.com/v1/current.json';
+const searchURL = 'https://api.apixu.com/v1/current.json'; //weather api base url endpoint
 
 function formatQueryParams(parameters) {
   const queryItems = Object.keys(parameters)
@@ -91,9 +91,6 @@ async function fetchYelp (lat, lon, category, term) {
                           <img class="yelpImg" src="${responseJson.businesses[i].image_url}" >
                           </div>`); //This is just temporary
 
-    //David-----------------------------------
-    //$('footer').html(displayYelpStuff(responseJson));
-    //David-------------------------------------
     }
 
     renderResult(responseJson);
@@ -115,7 +112,7 @@ function renderResult (responseJson) {
   responseJson.map(data => console.log(data));
 }
 
-//----------------------------------TODO***GET THIS WORKING TO PUSH OVER TO STORE
+
 function displayYelpStuff(someData){
   console.log(`here you goooo ${someData.businesses[0].alias}`);
   let yelpInjection = `<p>${someData.businesses[0].alias}</p>`;
@@ -127,12 +124,15 @@ function displayYelpStuff(someData){
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
-    const location = $('#js-location').val();
-    getLocationWeather(location);
+    const location = $('#js-location').val(); //taking user input and assigning to "location" variable
+    getLocationWeather(location); //calling the getLocationWeather and passing user's location in
   });
 }
 
 $(watchForm);
+
+
+
 
 /*David--------------------------------------------------------------------------------------------------------------------------------------*/
 // let appTitle = $('.le-projects'); //This code cycles through the RBB values of the shadow-text changing their colors over time
