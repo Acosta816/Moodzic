@@ -90,22 +90,8 @@ async function fetchYelp (latitude, longitude, categories, term, limit) {
   try {
     const response = await fetch(yelpUrl, authorization);
     const responseJson = await response.json();
-<<<<<<< HEAD
-    console.log(responseJson);
-    console.log(`here you goooo ${responseJson.businesses.length}`);
-
-    for(let i = 0; i< responseJson.businesses.length; i++ ){
-      $('.screens').append(`<div class ="flexBoxish"><p>${responseJson.businesses[i].name}</p>
-                          <img class="yelpImg" src="${responseJson.businesses[i].image_url}" >
-                          </div>`); //This is just temporary
-
-    }
-
-    renderResult(responseJson);
-=======
     STORE.yelpData = responseJson;
     displayResults();
->>>>>>> fb8b6c62c51f7e328219000aa497ee8cf79a026d
   }
   catch(err) {
     console.log(err);
@@ -151,12 +137,6 @@ function displayResults(){
   $('.screens').html((renderResults()));
 }
 
-<<<<<<< HEAD
-
-function displayYelpStuff(someData){
-  console.log(`here you goooo ${someData.businesses[0].alias}`);
-  let yelpInjection = `<p>${someData.businesses[0].alias}</p>`;
-=======
 function getYelpQueries(){
   if (checkWeather() === 'good'){
     return ['parks', 'parks', 'food', 'food'];
@@ -166,7 +146,6 @@ function getYelpQueries(){
   }
   return ['coffee', 'coffee'];
 }
->>>>>>> fb8b6c62c51f7e328219000aa497ee8cf79a026d
 
 function displayTitle(){
   if (checkWeather() === 'good'){
