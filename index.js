@@ -1,6 +1,6 @@
 'use strict';
 
-const searchURL = 'https://api.apixu.com/v1/current.json';
+const searchURL = 'https://api.apixu.com/v1/current.json'; //weather api base url endpoint
 
 function formatQueryParams(parameters) {
   const queryItems = Object.keys(parameters)
@@ -9,17 +9,17 @@ function formatQueryParams(parameters) {
 }
 
 async function getLocationWeather(query) {
-  const weatherParams = {
+  const weatherParams = {  //creating weather parameter object passing in the user location as a query
     q: query,
-    key: config.weatherApiKey
+    key: config.weatherApiKey //pulling weather api key from config file
   };
 
-  const queryString = formatQueryParams(weatherParams)
-  const finalWeatherUrl = searchURL + '?' + queryString;
+  const queryString = formatQueryParams(weatherParams)  //passing our weatherParams object into formatQueryParam function that returns string form of parameters.
+  const finalWeatherUrl = searchURL + '?' + queryString; //creating complete get request string variable by combining the base url with the query string we just made above. 
 
   try {
-    const response = await fetch (finalWeatherUrl);
-    const responseJson = await response.json();
+    const response = await fetch (finalWeatherUrl); //Our first get request using the complete string we constructed above.
+    const responseJson = await response.json(); //converted returned object into json object.
 //---------------------------------------------------------------------------------------------------------Playlist Title_start
     let iconVal = responseJson.current.condition.icon; //assigning the weather icon to the playlist header
     let textVal = responseJson.current.condition.text; //assigning the weather text to the playlist header
@@ -152,16 +152,25 @@ function displayTitle(){
     return `<h3>It's a nice day out, check out some local food or parks!</h3>`;
   }
   if (checkWeather() === 'good-night'){
-    return `<h3>It's a clear night, how about checking out some of these local bars!</h3>`;
+    return `<h3 class="suggestionHeader">It's a clear night, how about checking out some of these local bars!</h3>`;
   }
   return `<h3>It's not so nice out, check out some of these local coffee shops or order food from these delivery services</h3>`;
 }
 
 function renderYelpResults() {
- let results = STORE.yelpData.businesses.map(i => (
-  `<div class ="flexBoxish"><p>${i.name}</p>
-  <img class="yelpImg" src="${i.image_url}" >
-  </div>`));
+  
+ let results = STORE.yelpData.businesses.map(i => 
+  `<div class ="slide" >
+    <p>${i.name}</p>
+    <img class="yelpImg" src="${i.image_url}" >
+  </div>`);
+
+
+  results = `<div class="slider">
+                <div class ="slidePads"></div>
+                ${results}
+                <div class ="slidePads"></div>
+              </div>`;
 
   return results;
 }
@@ -169,8 +178,8 @@ function renderYelpResults() {
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
-    const location = $('#js-location').val();
-    getLocationWeather(location);
+    const location = $('#js-location').val(); //taking user input and assigning to "location" variable
+    getLocationWeather(location); //calling the getLocationWeather and passing user's location in
   });
 }
 
