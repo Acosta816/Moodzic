@@ -18,7 +18,7 @@ async function getLocationWeather(query) {
   const finalWeatherUrl = searchURL + '?' + queryString;
 
   try {
-    const response = await fetch (finalWeatherUrl);
+    const response = await fetch(finalWeatherUrl);
     const responseJson = await response.json();
 //---------------------------------------------------------------------------------------------------------Playlist Title_start
     let iconVal = responseJson.current.condition.icon; //assigning the weather icon to the playlist header
