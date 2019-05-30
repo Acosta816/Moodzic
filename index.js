@@ -14,7 +14,6 @@ async function getLocationWeather(query) {
     key: config.weatherApiKey
   };
 
-  console.log(config.weatherApiKey);
   const queryString = formatQueryParams(weatherParams)
   const finalWeatherUrl = searchURL + '?' + queryString;
 
@@ -27,8 +26,8 @@ async function getLocationWeather(query) {
     $('#playListClimate').closest('img').attr('src',iconVal);
     $('#mySidenav').find('h4').text(`${textVal} Playlist`);
 //---------------------------------------------------------------------------------------------------------Playlist Title_end
-    $('.screens').html(renderHtml(responseJson));
-    displayLocation(responseJson);
+    STORE.weatherData = responseJson;
+    displayLocation();
   }
   catch(err) {
     console.error(err);
@@ -36,18 +35,17 @@ async function getLocationWeather(query) {
 }
 
 /*David ------------------------------------------------------------------------------------------------------------*/
-function renderHtml(jsonObject){
-  console.log('here' +jsonObject.location.name);
+function renderWeatherHtml(){
 
   let screenInjection = `
                           <div class="weatherApiInfo">
                             <div class="placeAndDate">
-                              <h3>${jsonObject.location.name}, ${jsonObject.location.region}<h3>
-                              <p>${jsonObject.location.localtime}, <span>${jsonObject.current.condition.text}</span> </p>
+                              <h3>${STORE.weatherData.location.name}, ${STORE.weatherData.location.region}<h3>
+                              <p>${STORE.weatherData.location.localtime}, <span>${STORE.weatherData.current.condition.text}</span> </p>
                             </div>
                             <div class="tempAndIcon">
-                              <img src="${jsonObject.current.condition.icon}">
-                              <h2>${jsonObject.current.temp_f}F</h2>
+                              <img src="${STORE.weatherData.current.condition.icon}">
+                              <h2>${STORE.weatherData.current.temp_f}F</h2>
                             </div>  
                           </div>
                           `;
@@ -55,20 +53,29 @@ function renderHtml(jsonObject){
   return screenInjection;
 }
 /*David----------------------------------------------------------------------------------------------------------------------*/
-function displayLocation (jsonData) {
-  const lat = jsonData.location.lat;
-  const lon = jsonData.location.lon;
-  const category = checkWeather(jsonData);
-  fetchYelp(lat, lon, category[0], category[1]);
+function displayLocation () {
+  const lat = STORE.weatherData.location.lat;
+  const lon = STORE.weatherData.location.lon;
+  const category = getYelpQueries();
+  let limit = 4
+  if (category.length > 2) {
+    const term = `${category[0]},${category[2]}`;
+    const searchValue =  `${category[1]},${category[3]}`
+    let limit = 6;
+    fetchYelp(lat, lon, searchValue, term, limit);
+  } else {
+    fetchYelp(lat, lon, category[0], category[1], limit);
+  }
+  
 }
 
-async function fetchYelp (lat, lon, category, term) {
+async function fetchYelp (latitude, longitude, categories, term, limit) {
   const param = {
-    term: term,
-    categories: category,
-    limit: 4,
-    latitude: lat,
-    longitude: lon
+    term,
+    categories,
+    limit,
+    latitude,
+    longitude
   }
 
   const yelpParam = formatQueryParams(param);
@@ -83,6 +90,7 @@ async function fetchYelp (lat, lon, category, term) {
   try {
     const response = await fetch(yelpUrl, authorization);
     const responseJson = await response.json();
+<<<<<<< HEAD
     console.log(responseJson);
     console.log(`here you goooo ${responseJson.businesses.length}`);
 
@@ -94,32 +102,90 @@ async function fetchYelp (lat, lon, category, term) {
     }
 
     renderResult(responseJson);
+=======
+    STORE.yelpData = responseJson;
+    displayResults();
+>>>>>>> fb8b6c62c51f7e328219000aa497ee8cf79a026d
   }
   catch(err) {
     console.log(err);
   }
 }
 
+function displayFoodServices(){
+  return `<div class ="food-delivery">
+  <a href="https://grubhub.com" target="blank"><img class="food-delivery-image" src="images/grubhub.jpg" ></a>
+  <a href="https://ubereats.com" target="blank"><img class="food-delivery-image" src="images/ubereats.png" ></a>
+  </div>`;
+}
 
-function checkWeather(responseJson){
-  if (responseJson.current.condition.code < 1010 && responseJson.current.temp_f > 38){
-    return ['parks', 'parks'];
+function checkWeather(){
+  if (STORE.weatherData.current.condition.code < 1010 && STORE.weatherData.current.temp_f > 38 && STORE.weatherData.current.is_day === 1){
+    return 'good';
   } 
-  return ['cafe', 'food'];
+  if (STORE.weatherData.current.condition.code < 1010 && STORE.weatherData.current.is_day === 0){
+    return 'good-night';
+  }
+  return 'bad';
 }
 
-function renderResult (responseJson) {
-  responseJson.map(data => console.log(data));
+function renderResults(){
+  const weather = renderWeatherHtml();
+  const title = displayTitle();
+  const yelpResults = renderYelpResults();
+  const foodServices = displayFoodServices();
+  let html = ``;
+
+  if (checkWeather() === 'good'){
+    html = weather + title + yelpResults;
+  } else if (checkWeather() === 'good-night'){
+    html = weather + title + yelpResults;
+  } else {
+    html = weather + title + yelpResults + foodServices;
+  }
+  
+  return html
 }
 
+function displayResults(){
+  $('.screens').html((renderResults()));
+}
+
+<<<<<<< HEAD
 
 function displayYelpStuff(someData){
   console.log(`here you goooo ${someData.businesses[0].alias}`);
   let yelpInjection = `<p>${someData.businesses[0].alias}</p>`;
-
-  return yelpInjection;
+=======
+function getYelpQueries(){
+  if (checkWeather() === 'good'){
+    return ['parks', 'parks', 'food', 'food'];
+  }
+  if (checkWeather() === 'good-night'){
+    return ['bars', 'bars'];
+  }
+  return ['coffee', 'coffee'];
 }
-/*--------------------*/
+>>>>>>> fb8b6c62c51f7e328219000aa497ee8cf79a026d
+
+function displayTitle(){
+  if (checkWeather() === 'good'){
+    return `<h3>It's a nice day out, check out some local food or parks!</h3>`;
+  }
+  if (checkWeather() === 'good-night'){
+    return `<h3>It's a clear night, how about checking out some of these local bars!</h3>`;
+  }
+  return `<h3>It's not so nice out, check out some of these local coffee shops or order food from these delivery services</h3>`;
+}
+
+function renderYelpResults() {
+ let results = STORE.yelpData.businesses.map(i => (
+  `<div class ="flexBoxish"><p>${i.name}</p>
+  <img class="yelpImg" src="${i.image_url}" >
+  </div>`));
+
+  return results;
+}
 
 function watchForm() {
   $('form').submit(event => {
@@ -130,6 +196,7 @@ function watchForm() {
 }
 
 $(watchForm);
+<<<<<<< HEAD
 
 
 
@@ -167,3 +234,5 @@ $(watchForm);
 //         };//endloop
 
 //         runColorsAnm(); //iife immediately invoked function event
+=======
+>>>>>>> fb8b6c62c51f7e328219000aa497ee8cf79a026d
