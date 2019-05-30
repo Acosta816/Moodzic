@@ -302,8 +302,8 @@ input {
   .slider {
     display: flex;
     align-items: center;
-    border: 5px groove rgba(90, 38, 0, 0.82);
-    background-color: black;
+    border-top: 5px groove white;
+    border-bottom: 5px groove white;
     width: 100%;
     height: 75%;
     overflow-x: auto;
@@ -315,7 +315,6 @@ input {
   .slidePads {
     width: 10%;
     height: 100%;
-    border: 1px solid black;
     flex-shrink: 0;
     scroll-behavior: smooth;
     scroll-snap-align: center;
@@ -324,12 +323,15 @@ input {
   .slide {
     width: 75%;
     height: 95%;
-    border: 1px solid black;
     margin-left: 5px;
     margin-right: 5px;
     flex-shrink: 0;
     scroll-behavior: smooth;
     scroll-snap-align: center;
+  }
+
+  .slide p {
+    height: 3em;
   }
   
 /* This is the styling for the Services ----------------------------END*/

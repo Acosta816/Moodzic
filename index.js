@@ -163,7 +163,7 @@ function renderYelpResults() {
   `<div class ="slide" >
     <p>${i.name}</p>
     <img class="yelpImg" src="${i.image_url}" >
-  </div>`);
+  </div>`).join('');
 
 
   results = `<div class="slider">
