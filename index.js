@@ -161,7 +161,7 @@ function renderYelpResults() {
  let results = STORE.yelpData.businesses.map(i => (
   `<div class ="flexBoxish"><p>${i.name}</p>
   <img class="yelpImg" src="${i.image_url}" >
-  </div>`));
+  </div>`)).join('');
 
   return results;
 }
