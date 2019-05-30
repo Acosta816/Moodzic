@@ -272,6 +272,9 @@ input {
 
   .yelpImg {
     width: 200px;
+    height: 200px;
+    border-radius: 13px;
+    border: 4px solid white;
   }
 
   h2 img {
@@ -279,11 +282,6 @@ input {
     margin-top: 20px;
   }
 
-  .flexBoxish {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
 
   .food-delivery {
     display: flex;
@@ -295,6 +293,46 @@ input {
     margin: 15px;
   }
 
+  .suggestionHeader {
+    background-color: #3a0000e0;
+    border: black solid 2px;
+  }
+
+  /* This is the styling for the Services ----------------------------START*/
+  .slider {
+    display: flex;
+    align-items: center;
+    border: 5px groove rgba(90, 38, 0, 0.82);
+    background-color: black;
+    width: 100%;
+    height: 75%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    
+  }
+
+  .slidePads {
+    width: 10%;
+    height: 100%;
+    border: 1px solid black;
+    flex-shrink: 0;
+    scroll-behavior: smooth;
+    scroll-snap-align: center;
+  }
+  
+  .slide {
+    width: 75%;
+    height: 95%;
+    border: 1px solid black;
+    margin-left: 5px;
+    margin-right: 5px;
+    flex-shrink: 0;
+    scroll-behavior: smooth;
+    scroll-snap-align: center;
+  }
+  
+/* This is the styling for the Services ----------------------------END*/
 
 @media(min-width:600px){
   main {
