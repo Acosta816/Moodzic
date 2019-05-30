@@ -1,3 +1,8 @@
+(function defaultPlayList() {
+  const url = `<iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX1gRalH1mWrP" width="200" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
+
+  $('.music-container').html(url);
+})();
 
 function loginSpot () {
   window.location=`https://accounts.spotify.com/authorize?client_id=40fb8cf91894461186ea39861c0c1710&response_type=code&redirect_uri=http://127.0.0.1:5500/index.html&scope=user-top-read&show_dialog=true`;
@@ -66,7 +71,8 @@ async function getUserPlaylist (response) {
   try {
     const response = await fetch ('https://api.spotify.com/v1/users/1224174868/playlists', authorization);
     const playlist = await response.json();
-    findGoodVibePlaylist(playlist, token);
+    STORE.spotifyPlaylist = playlist;
+    console.log(STORE);
   }
   catch(err) {
     console.log(err);
@@ -77,15 +83,15 @@ function appendMusicButton (uriId, token) {
   const url = `<iframe src="https://open.spotify.com/embed/playlist/${uriId}" width="200" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
 
   $('.music-container').html(`${url}`);
-
 }
 
-async function findGoodVibePlaylist(playlist, token) {
-  const goodVibe = playlist.items.find(name => name.name === "Good Vibe Moodsic");
-  const uri = goodVibe.uri;
-  const uriId = goodVibe.id;
+function findGoodVibePlaylist(store) {
+  console.log(store);
+  const goodVibe = store.spotifyPlaylist.items.find(name => name.name === "Good Vibe Moodsic");
+  const goodVibeId = goodVibe.id;
+    appendMusicButton(goodVibeId);
 
-  appendMusicButton(uriId, token);
+  
 
   // const authorization = {
   //   method: 'PUT',
@@ -102,6 +108,12 @@ async function findGoodVibePlaylist(playlist, token) {
 //   // catch(err) {
 //   //   console.log(err);
 //   // }
+}
+
+function findFeelsPlaylist(store) {
+  const feels = store.spotifyPlaylist.items.find(name => name.name === "Feels");
+  const feelsId = feels.id;
+    appendMusicButton(feelsId);
 }
 
 

@@ -19,12 +19,23 @@ async function getLocationWeather (query) {
   try {
     const response = await fetch (finalWeatherUrl);
     const responseJson = await response.json();
+    STORE.weatherData = responseJson;
+    createPlaylistFromcondition();
     $('.screens').html(renderHtml(responseJson));
     displayLocation(responseJson);
     assignPlayListHeader(responseJson);
   }
   catch(err) {
     console.log(err);
+  }
+}
+
+function createPlaylistFromcondition () {
+  console.log(STORE);
+  if (STORE.weatherData.current.is_day === 1) {
+    findFeelsPlaylist(STORE)
+  } else if (STORE.weatherData.current.is_day === 0) {
+    findGoodVibePlaylist(STORE);
   }
 }
 
@@ -91,8 +102,8 @@ async function fetchYelp (lat, lon, category, term) {
     //$('footer').html(displayYelpStuff(responseJson));
     //David-------------------------------------
     }
-
     renderResult(responseJson);
+    console.log(responseJson);
   }
   catch (err) {
     console.log(err);
