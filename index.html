@@ -18,14 +18,12 @@
 <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <img class="playListClimate" id="playListClimate" src="images\shot2.png"> <h4 class = "playListTitle">Playlist</h4>
-        <a href="#">track#1</a>
-        <a href="#">track#2</a>
-        <a href="#">track#3</a>
-        <a href="#">track#4</a>
-      </div>
+        <div class="music-container"></div>
+</div>
 <!-- MUSIC SIDE NAV _end**-->
 
 <body>
+  
   <main role="main" class="site">
     <span id="playListOpen" onclick="openNav()">☰ music</span>
       <section>
@@ -82,7 +80,7 @@
 
           <input class="goButton" type="submit" value="Go!">
       </form>
-    
+      <button onclick="loginSpot()">Login with Spotify</button>
       <p id="js-error-message" class="error-message"></p>
 
     </div>
@@ -103,10 +101,8 @@
           </section>
   
       </main>
-
+    
     <script src="index.js"></script>
     <script src="spotify.js"></script>
 </body>
 </html>
-
-<img src="" alt="">
