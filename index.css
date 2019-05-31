@@ -6,41 +6,64 @@
 html {
   background-color: #1a2661;
 }
+
+.overlay {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  opacity: .85;
+  background-color: rgba(111, 199, 194, 0.36);
+  z-index: 3;
+}
+
+.notUsingSpot {
+  margin-top: 15rem;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  background-color: red;
+}
+
+.pageLogin {
   
-  body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    font-family: 'Comfortaa', cursive; 
-    background-image: 
-                      url("https://cdn.dribbble.com/users/1209414/screenshots/4468735/earth.gif"),
-                      url("https://media.giphy.com/media/xB2huFLKz1SeMFO4w2/giphy.gif"),
-                      url("https://media.giphy.com/media/xB2huFLKz1SeMFO4w2/giphy.gif");
-    background-position: bottom ,top right, center left;
-    background-repeat: no-repeat, no-repeat, no-repeat;
-    background-size: auto 80%, 15%, 10%;
-    text-align: center;
-    line-height: 1.5;
-    background-attachment: scroll, fixed, fixed;
-    position: relative;
-  }
+}
 
-  .modal {
-    opacity: .5;
-    background-color: green;
-    position: absolute;
-  }
+.spotify-img {
+  height: 200px;
+  width: 200px;
+  margin-top: 5%;
+  border-radius: 50%;
+  box-shadow: 0 0 15px #03530e, inset -40px 0px 0px #2dbb23, inset 50px 0px 0px #85de29f5, inset 68px 0px 0px 35px #a7e641, 0px 0px 0px 20px rgba(65, 140, 42, 0.5), 0px 0px 0px 51px rgba(81, 121, 37, 0.79), 0px 0px 0px 74px rgba(49, 107, 25, 0.7);
+}
 
-  .formContainer {
-    display: flex;
-    flex-direction: row;
-  }
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  font-family: 'Comfortaa', cursive; 
+  background-position: bottom ,top right, center left;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-size: auto 80%, 15%, 10%;
+  text-align: center;
+  line-height: 1.5;
+  background-attachment: scroll, fixed, fixed;
+  position: relative;
+}
 
-  .weatherApiInfo {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
+.formContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.weatherApiInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
 .placeAndDate {
   display: flex;
@@ -108,6 +131,7 @@ main{
   height: auto;
   justify-content: flex-start;
   justify-content: space-between;
+  opacity: .02;
 }
 
 

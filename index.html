@@ -25,7 +25,11 @@
 <!-- MUSIC SIDE NAV _end**-->
 
 <body>
-
+    <div class="overlay">
+      <h1>Login with Spotify!</h1>
+      <img class="spotify-img" src="images/spotify.png" alt="">
+      <button class="notUsingSpot">No Thanks</button>
+    </div>
         <main role="main" class="site">
 
                 <span id="playListOpen" onclick="openNav()">☰ music</span>
@@ -86,7 +90,7 @@
         
                     <input class="goButton" type="submit" value="Go!">
                 </form>
-                <button onclick="loginSpot()">Login with Spotify</button>
+                <button class="pageLogin" onclick="loginSpot()">Login with Spotify</button>
                 <p id="js-error-message" class="error-message"></p>
         
             </div>
@@ -114,7 +118,9 @@
             </main>
 
         </footer>
+
     <script src="spotify.js"></script>
     <script src="index.js"></script>
+    <script src="login.js"></script>
 </body>
 </html>
