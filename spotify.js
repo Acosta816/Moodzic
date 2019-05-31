@@ -1,5 +1,5 @@
 (function defaultPlayList() {
-  const url = `<iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX1gRalH1mWrP" width="200" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
+  const url = `<iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX1gRalH1mWrP" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
   
   $('.music-container').html(url);
 })();
@@ -79,7 +79,7 @@ async function getUserPlaylist (response) {
 }
   
 function appendMusicButton (uriId) {
-  const url = `<iframe src="https://open.spotify.com/embed/playlist/${uriId}" width="200" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
+  const url = `<iframe src="https://open.spotify.com/embed/playlist/${uriId}" width="300px" height="380px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
   
   $('.music-container').html(`${url}`);
 
@@ -106,6 +106,8 @@ function findGetLitPlaylist(store) {
   const litId = lit.id;
   appendMusicButton(litId);
 }
+
+
 
 
 
