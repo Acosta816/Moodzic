@@ -25,7 +25,12 @@
 <!-- MUSIC SIDE NAV _end**-->
 
 <body>
-
+    <div class="overlay">
+      <img class="logo" src="images/logo_words.png">
+      <h1>To use the full features of the app, please login with spotify by clicking below</h1>
+      <img class="spotify-img" src="images/spotify.png" alt="">
+      <button class="notUsingSpot">Continue Without Spotify</button>
+    </div>
         <main role="main" class="site">
 
                 <span id="playListOpen" onclick="openNav()">☰ music</span>
@@ -82,11 +87,11 @@
 
                 <form id="js-form">
                     <label for="search-term">Enter Location</label>
-                    <input type="text" name="search-term" id="js-location" required>
-        
-                    <input class="goButton" type="submit" value="Go!">
+                    <div class="for-flexbox">
+                      <input type="text" name="search-term" id="js-location" required>
+                      <input class="goButton" type="submit" value="Go!">
+                    </div>
                 </form>
-                <button onclick="loginSpot()">Login with Spotify</button>
                 <p id="js-error-message" class="error-message"></p>
         
             </div>
@@ -114,7 +119,9 @@
             </main>
 
         </footer>
+
     <script src="spotify.js"></script>
     <script src="index.js"></script>
+    <script src="login.js"></script>
 </body>
 </html>

@@ -170,11 +170,13 @@ function displayTitle(){
 }
 
 function renderYelpResults() {
+  console.log(STORE.yelpData.businesses);
   
  let results = STORE.yelpData.businesses.map(i => 
   `<div class ="slide" >
-    <p>${i.name}</p>
+    <h4>${i.name}</h4>
     <img class="yelpImg" src="${i.image_url}" >
+    ${i.location.display_address.map(i => `<p>${i}</p>`).join('')}
   </div>`).join('');
 
 
