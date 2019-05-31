@@ -172,9 +172,12 @@ function displayTitle(){
 function renderYelpResults() {
   
  let results = STORE.yelpData.businesses.map(i => 
-  `<div class ="slide" >
-    <p>${i.name}</p>
-    <img class="yelpImg" src="${i.image_url}" >
+  `<div class ="slide">
+    <a target="_blank" href="${i.url}"><h3>${i.name}</h3></a>
+    <div class="yelp-holder">
+      <img class="yelpImg" src="${i.image_url}" >
+      ${i.location.display_address.map(i => `<p>${i}</p>`).join('')}
+    </div>
   </div>`).join('');
 
 
