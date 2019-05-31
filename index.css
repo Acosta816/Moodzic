@@ -325,8 +325,10 @@ input {
     margin: 15px;
   }
 
-  
-
+  .suggestionHeader {
+    background-color: #3a0000e0;
+    border: black solid 2px;
+  }
 
   /* This is the styling for the Services ----------------------------START*/
   .slider {
@@ -360,24 +362,8 @@ input {
     scroll-snap-align: center;
   }
 
-  .slide a {
-    text-decoration: none;
-  }
-
-  .slide h4 {
+  .slide p {
     height: 3em;
-  }
-
-  .slide a:hover {
-    text-decoration: underline;
-  }
-
-  .slide h4:hover {
-    cursor: pointer;
-  }
-
-  footer ul {
-    list-style-type: none;
   }
   
 /* This is the styling for the Services ----------------------------END*/
@@ -411,6 +397,7 @@ input {
 
   h3 {
     font-size: 28px;
+    text-decoration: underline;
   }
 
   h4 {
