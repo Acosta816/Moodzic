@@ -18,18 +18,9 @@ html {
   opacity: .85;
   background-color: rgba(111, 199, 194, 0.36);
   z-index: 3;
-}
-
-.notUsingSpot {
-  margin-top: 15rem;
-  height: 100px;
-  width: 100px;
-  border-radius: 50%;
-  background-color: red;
-}
-
-.pageLogin {
-  
+  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
 }
 
 .spotify-img {
@@ -37,8 +28,45 @@ html {
   width: 200px;
   margin-top: 5%;
   border-radius: 50%;
-  box-shadow: 0 0 15px #03530e, inset -40px 0px 0px #2dbb23, inset 50px 0px 0px #85de29f5, inset 68px 0px 0px 35px #a7e641, 0px 0px 0px 20px rgba(65, 140, 42, 0.5), 0px 0px 0px 51px rgba(81, 121, 37, 0.79), 0px 0px 0px 74px rgba(49, 107, 25, 0.7);
+  box-shadow: 
+    0 0 60px 30px #fff, 
+    0 0 100px 60px #f0f, 
+    0 0 140px 90px #0ff; 
+  animation: animate 3s linear infinite;
 }
+
+@keyframes animate {
+  0%{
+  opacity: .7;
+  }
+  40%{
+    box-shadow: 
+    0 0 0 30px rgba(0, 0, 0, 0),
+    0 0 0 60px rgba(0, 0, 0, 0),
+    0 0 0 90px rgba(0, 0, 0, 0);
+  }
+  80%{
+    box-shadow: 
+    0 0 0 30px rgba(0, 0, 0, 0),
+    0 0 0 60px rgba(0, 0, 0, 0),
+    0 0 0 90px rgba(0, 0, 0, 0);
+  }
+  100%{
+    box-shadow: 
+    0 0 60px 30px rgba(#fff, 0),
+    0 0 100px 60px rgba(#f0f, 0),
+    0 0 140px 90px rgba(#0ff, 0);
+  }
+}
+
+.notUsingSpot {
+  margin-top: 15rem;
+  height: 50px;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+}
+
 
 body {
   margin: 0;
