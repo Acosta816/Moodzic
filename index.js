@@ -28,9 +28,21 @@ async function getLocationWeather(query) {
 //---------------------------------------------------------------------------------------------------------Playlist Title_end
     STORE.weatherData = responseJson;
     displayLocation();
+    createPlaylistFromCondition();
   }
   catch(err) {
     console.error(err);
+  }
+}
+
+function createPlaylistFromCondition () {
+  console.log(STORE);
+  if (STORE.weatherData.current.condition.code < 1010 && STORE.weatherData.current.temp_f > 38 && STORE.weatherData.current.is_day === 1) {
+    findGoodVibePlaylist(STORE);
+  } else if (STORE.weatherData.current.condition.code < 1010 && STORE.weatherData.current.is_day === 0) {
+    findGetLitPlaylist(STORE);
+  } else {
+    findFeelsPlaylist(STORE)
   }
 }
 
