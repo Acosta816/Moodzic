@@ -10,13 +10,12 @@ background-color: #1a2661;
 .overlay {
   position: fixed;
   display: flex;
-  justify-content: center;
   flex-direction: column;
   align-items: center;
   width: 100%;
   height: 100%;
   opacity: .85;
-  background-color: #1a2661;
+  background-color: rgba(111, 199, 194, 0.36);
   z-index: 3;
   transform: translate(-50%,-50%);
   top: 50%;
@@ -29,26 +28,28 @@ background-color: #1a2661;
 
 .logo {
   width: 185px;
-  margin-top: 15px;
+  margin-top: 40px;
   margin-bottom: 10px;
 }
 
 .notUsingSpot {
-margin-top: 40px;
+margin-top: 5rem;
 width: 50%;
-background: #1a2661;
-font-size: 20px
+background: white;
+font-size: 20px;
+color: black;
+font-family: 'Comfortaa', cursive;
 }
 
 
 .spotify-img {
-  width: 125px;
-  margin-top: 5%;
+  height: 125px;
+  margin-top: 8%;
   border-radius: 50%;
   box-shadow: 
-    0 0 1px 1px #1DB954, 
-    0 0 4px 4px #1DB954, 
-    0 0 8px 8px #1DB954; 
+    0 0 1px 1px #fff, 
+    0 0 4px 4px #f0f, 
+    0 0 8px 8px #0ff; 
   animation: animate 3s linear infinite;
 }
 
@@ -71,8 +72,8 @@ font-size: 20px
   100%{
     box-shadow: 
     0 0 1px 1px rgba(#fff, 0),
-    0 0 4px 4px rgba(#1DB954, 0),
-    0 0 8px 8px rgba(#1DB954, 0);
+    0 0 4px 4px rgba(#f0f, 0),
+    0 0 8px 8px rgba(#0ff, 0);
   }
 }
 
@@ -410,60 +411,94 @@ footer ul {
 /* This is the styling for the Services ----------------------------END*/
 
 @media(min-width:600px){
-main {
-    padding: 60px;
-}
+  main {
+      padding: 60px;
+  }
 
-p {
-    font-size: 1.25rem;
-}
+  p {
+      font-size: 1.25rem;
+  }
 
-.le-projects{
-    font-size: 3rem;
-}
+  .le-projects{
+      font-size: 3rem;
+  }
 
-.app-title {
-    text-align: center;
+  .app-title {
+      text-align: center;
+      text-decoration: underline;
+      color: rgb(255, 255, 255);
+      font-size: 2.5rem;
+  }
+
+
+
+  h1 {
+      font-size: 1.5rem;
+  }
+
+
+  h3 {
+    font-size: 28px;
     text-decoration: underline;
-    color: rgb(255, 255, 255);
-    font-size: 2.5rem;
-}
+  }
 
+  h4 {
+      font-size: 1.5rem;
+      margin-bottom: 0px; 
+  }
 
+  .clouds {
+      top:-100px;
+      width:50%;
+      left:40%;
+  }
 
-h1 {
-    font-size: 1.5rem;
-}
+  .slide {
+    width: 50%;
+  }
 
+  .overlay h1 {
+    margin: 50px;
+  }
 
-h3 {
-  font-size: 28px;
-  text-decoration: underline;
-}
+  .notUsingSpot {
+    margin-top: 15rem;
+    width: 20%;
+    font-family: 'Comfortaa', cursive;
+  }
 
-h4 {
-    font-size: 1.5rem;
-    margin-bottom: 0px; 
-}
+  .spotify-img {
+    height: 200px;
+    width: 200px;
+    margin-top: 5%;
+    border-radius: 50%;
+    box-shadow: 0 0 60px 30px #fff, 0 0 100px 60px #f0f, 0 0 140px 90px #0ff;
+    animation: animate 3s linear infinite;
+  }
 
-.clouds {
-    top:-100px;
-    width:50%;
-    left:40%;
-}
-
-.slide {
-  width: 50%;
-}
-
-.overlay h1 {
-  margin: 50px;
-}
-
-.notUsingSpot {
-  margin-top: 50px;
-}
-
+  @keyframes animate {
+    0%{
+    opacity: .7;
+    }
+    40%{
+      box-shadow: 
+      0 0 0 30px rgba(0, 0, 0, 0),
+      0 0 0 60px rgba(0, 0, 0, 0),
+      0 0 0 90px rgba(0, 0, 0, 0);
+    }
+    80%{
+      box-shadow: 
+      0 0 0 30px rgba(0, 0, 0, 0),
+      0 0 0 60px rgba(0, 0, 0, 0),
+      0 0 0 90px rgba(0, 0, 0, 0);
+    }
+    100%{
+      box-shadow: 
+      0 0 60px 30px rgba(#fff, 0),
+      0 0 100px 60px rgba(#f0f, 0),
+      0 0 140px 90px rgba(#0ff, 0);
+    }
+  }
 }
 
 @media(min-width:800px){
@@ -481,6 +516,10 @@ h4 {
       width: 33%;
     }
 
+    .notUsingSpot {
+      width: 15%;
+      font-family: 'Comfortaa', cursive;
+    }
 
 }
 
