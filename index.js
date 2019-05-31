@@ -1,170 +1,198 @@
 'use strict';
 
-function formatQueryParams (parameters) {
+const searchURL = 'https://api.apixu.com/v1/current.json'; //weather api base url endpoint
+
+function formatQueryParams(parameters) {
   const queryItems = Object.keys(parameters)
     .map(key => `${key}=${parameters[key]}`);
   return queryItems.join('&');
 }
 
-async function getLocationWeather (query) {
-  const weatherParams = {
+async function getLocationWeather(query) {
+  const weatherParams = {  //creating weather parameter object passing in the user location as a query
     q: query,
-    key: config.weatherApiKey
+    key: config.weatherApiKey //pulling weather api key from config file
   };
 
-  const queryString = formatQueryParams(weatherParams)
-  const searchURL = 'https://api.apixu.com/v1/current.json';
-  const finalWeatherUrl = searchURL + '?' + queryString;
+  const queryString = formatQueryParams(weatherParams)  //passing our weatherParams object into formatQueryParam function that returns string form of parameters.
+  const finalWeatherUrl = searchURL + '?' + queryString; //creating complete get request string variable by combining the base url with the query string we just made above. 
 
   try {
-    const response = await fetch (finalWeatherUrl);
-    const responseJson = await response.json();
-    $('.screens').html(renderHtml(responseJson));
-    displayLocation(responseJson);
-    assignPlayListHeader(responseJson);
+    const response = await fetch (finalWeatherUrl); //Our first get request using the complete string we constructed above.
+    const responseJson = await response.json(); //converted returned object into json object.
+//---------------------------------------------------------------------------------------------------------Playlist Title_start
+    let iconVal = responseJson.current.condition.icon; //assigning the weather icon to the playlist header
+    let textVal = responseJson.current.condition.text; //assigning the weather text to the playlist header
+    $('#playListClimate').closest('img').attr('src',iconVal);
+    $('#mySidenav').find('h4').text(`${textVal} Playlist`);
+//---------------------------------------------------------------------------------------------------------Playlist Title_end
+    STORE.weatherData = responseJson;
+    displayLocation();
+    createPlaylistFromCondition();
   }
   catch(err) {
-    console.log(err);
+    console.error(err);
   }
 }
 
-function assignPlayListHeader (responseJson) {
-  let iconVal = responseJson.current.condition.icon; //assigning the weather icon to the playlist header
-  let textVal = responseJson.current.condition.text; //assigning the weather text to the playlist header
-  $('#playListClimate').closest('img').attr('src',iconVal);
-  $('#mySidenav').find('h4').text(`${textVal} Playlist`);
+function createPlaylistFromCondition () {
+  console.log(STORE);
+  if (STORE.weatherData.current.condition.code < 1010 && STORE.weatherData.current.temp_f > 38 && STORE.weatherData.current.is_day === 1) {
+    findGoodVibePlaylist(STORE);
+  } else if (STORE.weatherData.current.condition.code < 1010 && STORE.weatherData.current.is_day === 0) {
+    findGetLitPlaylist(STORE);
+  } else {
+    findFeelsPlaylist(STORE)
+  }
 }
 
-function renderHtml (jsonObject) {
+/*David ------------------------------------------------------------------------------------------------------------*/
+function renderWeatherHtml(){
 
-  let screenInjection =
-  `
-  <div class="weatherApiInfo">
-    <div class="placeAndDate">
-      <h3>${jsonObject.location.name}, ${jsonObject.location.region}<h3>
-      <p>${jsonObject.location.localtime}, <span>${jsonObject.current.condition.text}</span> </p>
-    </div>
-    <div class="tempAndIcon">
-      <img src="${jsonObject.current.condition.icon}">
-      <h2>${jsonObject.current.temp_f}F</h2>
-    </div>  
-  </div>
-   `;
+  let screenInjection = `
+                          <div class="weatherApiInfo">
+                            <div class="placeAndDate">
+                              <h3>${STORE.weatherData.location.name}, ${STORE.weatherData.location.region}<h3>
+                              <p>${STORE.weatherData.location.localtime}, <span>${STORE.weatherData.current.condition.text}</span> </p>
+                            </div>
+                            <div class="tempAndIcon">
+                              <img src="${STORE.weatherData.current.condition.icon}">
+                              <h2>${STORE.weatherData.current.temp_f}F</h2>
+                            </div>  
+                          </div>
+                          `;
+
   return screenInjection;
 }
-
-function displayLocation (jsonData) {
-  const lat = jsonData.location.lat;
-  const lon = jsonData.location.lon;
-  const category = checkWeather(jsonData);
-  fetchYelp(lat, lon, category[0], category[1]);
+/*David----------------------------------------------------------------------------------------------------------------------*/
+function displayLocation () {
+  const lat = STORE.weatherData.location.lat;
+  const lon = STORE.weatherData.location.lon;
+  const category = getYelpQueries();
+  let limit = 4
+  if (category.length > 2) {
+    const term = `${category[0]},${category[2]}`;
+    const searchValue =  `${category[1]},${category[3]}`
+    let limit = 6;
+    fetchYelp(lat, lon, searchValue, term, limit);
+  } else {
+    fetchYelp(lat, lon, category[0], category[1], limit);
+  }
+  
 }
 
-async function fetchYelp (lat, lon, category, term) {
+async function fetchYelp (latitude, longitude, categories, term, limit) {
   const param = {
-    term: term,
-    categories: category,
-    limit: 4,
-    latitude: lat,
-    longitude: lon
+    term,
+    categories,
+    limit,
+    latitude,
+    longitude
   }
 
   const yelpParam = formatQueryParams(param);
   const searchUrl = 'https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search';
   const yelpUrl = `${searchUrl}?${yelpParam}`;
   const authorization = {
-    headers: new Headers ({
+    headers: new Headers({
       'Authorization': `Bearer ${config.yelpApiKey}`
     })
   }
 
   try {
-    const response = await fetch (yelpUrl, authorization);
+    const response = await fetch(yelpUrl, authorization);
     const responseJson = await response.json();
-
-    for(let i = 0; i< responseJson.businesses.length; i++ ){
-      $('.screens').append(`<div class ="flexBoxish"><p>${responseJson.businesses[i].name}</p>
-                          <img class="yelpImg" src="${responseJson.businesses[i].image_url}" >
-                          </div>`); //This is just temporary
-
-    //David-----------------------------------
-    //$('footer').html(displayYelpStuff(responseJson));
-    //David-------------------------------------
-    }
-
-    renderResult(responseJson);
+    STORE.yelpData = responseJson;
+    displayResults();
   }
-  catch (err) {
+  catch(err) {
     console.log(err);
   }
 }
 
+function displayFoodServices(){
+  return `<div class ="food-delivery">
+  <a href="https://grubhub.com" target="blank"><img class="food-delivery-image" src="images/grubhub.jpg" ></a>
+  <a href="https://ubereats.com" target="blank"><img class="food-delivery-image" src="images/ubereats.png" ></a>
+  </div>`;
+}
 
-function checkWeather (responseJson) {
-  if (responseJson.current.condition.code < 1010 && responseJson.current.temp_f > 38) {
-    return ['parks', 'parks'];
+function checkWeather(){
+  if (STORE.weatherData.current.condition.code < 1010 && STORE.weatherData.current.temp_f > 38 && STORE.weatherData.current.is_day === 1){
+    return 'good';
   } 
-  return ['cafe', 'food'];
+  if (STORE.weatherData.current.condition.code < 1010 && STORE.weatherData.current.is_day === 0){
+    return 'good-night';
+  }
+  return 'bad';
 }
 
-function renderResult (responseJson) {
-  responseJson.map(data => console.log(data));
+function renderResults(){
+  const weather = renderWeatherHtml();
+  const title = displayTitle();
+  const yelpResults = renderYelpResults();
+  const foodServices = displayFoodServices();
+  let html = ``;
+
+  if (checkWeather() === 'good'){
+    html = weather + title + yelpResults;
+  } else if (checkWeather() === 'good-night'){
+    html = weather + title + yelpResults;
+  } else {
+    html = weather + title + yelpResults + foodServices;
+  }
+  
+  return html
 }
 
-//----------------------------------TODO***GET THIS WORKING TO PUSH OVER TO STORE
-function displayYelpStuff(someData){
-  console.log(`here you goooo ${someData.businesses[0].alias}`);
-  let yelpInjection = `<p>${someData.businesses[0].alias}</p>`;
-
-  return yelpInjection;
+function displayResults(){
+  $('.screens').html((renderResults()));
 }
-/*--------------------*/
+
+function getYelpQueries(){
+  if (checkWeather() === 'good'){
+    return ['parks', 'parks', 'food', 'food'];
+  }
+  if (checkWeather() === 'good-night'){
+    return ['bars', 'bars'];
+  }
+  return ['coffee', 'coffee'];
+}
+
+function displayTitle(){
+  if (checkWeather() === 'good'){
+    return `<h3>It's a nice day out, check out some local food or parks!</h3>`;
+  }
+  if (checkWeather() === 'good-night'){
+    return `<h3 class="suggestionHeader">It's a clear night, how about checking out some of these local bars!</h3>`;
+  }
+  return `<h3>It's not so nice out, check out some of these local coffee shops or order food from these delivery services</h3>`;
+}
+
+function renderYelpResults() {
+  
+ let results = STORE.yelpData.businesses.map(i => 
+  `<div class ="slide" >
+    <p>${i.name}</p>
+    <img class="yelpImg" src="${i.image_url}" >
+  </div>`);
 
 
+  results = `<div class="slider">
+                <div class ="slidePads"></div>
+                ${results}
+                <div class ="slidePads"></div>
+              </div>`;
 
+  return results;
+}
 
-
-
-function watchForm () {
+function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
-    const location = $('#js-location').val();
-    getLocationWeather(location);
+    const location = $('#js-location').val(); //taking user input and assigning to "location" variable
+    getLocationWeather(location); //calling the getLocationWeather and passing user's location in
   });
 }
 
 $(watchForm);
-
-/*David--------------------------------------------------------------------------------------------------------------------------------------*/
-// let appTitle = $('.le-projects'); //This code cycles through the RBB values of the shadow-text changing their colors over time
-
-//         function runColorsAnm(){
-//
-//         $({'r':27,'g':213,'b':255, }).animate({'r':31,'g':255,'b':69},{queue:false,duration:3000, easing:'swing',
-//           step: function(now) {
-//             appTitle.css('text-shadow', '0 0 9px rgb('+this.r+','+this.g+','+this.b+')');
-
-//           }, complete:function(){
-//             $({'r':31,'g':255,'b':69}).animate({'r':255,'g':15,'b':15},{queue:false,duration:3000, easing:'swing',
-//               step: function(now) {
-//                   appTitle.css('text-shadow', '0 0 9px rgb('+this.r+','+this.g+','+this.b+')');
-
-//               }, complete:function(){
-//                 $({'r':255,'g':15,'b':15}).animate({'r':255,'g':15,'b':248},{queue:false,duration:3000, easing:'swing',
-//                   step: function(now) {
-//                       appTitle.css('text-shadow', '0 0 9px rgb('+this.r+','+this.g+','+this.b+')');
-
-//                   }, complete:function(){
-//                       //loop here
-//                       console.log('restart');
-//                       runColorsAnm();
-//                   } //NEXT-SUB-SEQUENCE-.
-//                 });
-//               } //NEXT-SUB-SEQUENCE-.
-//             });
-//           } //NEXT-SUB-SEQUENCE-.
-//         });
-
-//         };//endloop
-
-//         runColorsAnm(); //iife immediately invoked function event
