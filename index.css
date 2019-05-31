@@ -16,7 +16,7 @@ html {
   width: 100%;
   height: 100%;
   opacity: .85;
-  background-color: rgba(111, 199, 194, 0.36);
+  background-color: #1a2661;
   z-index: 3;
 }
 
@@ -28,9 +28,6 @@ html {
   background-color: red;
 }
 
-.pageLogin {
-  
-}
 
 .spotify-img {
   height: 200px;
@@ -52,6 +49,10 @@ body {
   line-height: 1.5;
   background-attachment: scroll, fixed, fixed;
   position: relative;
+  background-image: 
+    url("https://cdn.dribbble.com/users/1209414/screenshots/4468735/earth.gif"),
+    url("https://media.giphy.com/media/xB2huFLKz1SeMFO4w2/giphy.gif"),
+    url("https://media.giphy.com/media/xB2huFLKz1SeMFO4w2/giphy.gif");
 }
 
 .formContainer {
