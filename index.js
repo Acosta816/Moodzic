@@ -2,13 +2,13 @@
 
 const searchURL = 'https://api.apixu.com/v1/current.json'; //weather api base url endpoint
 
-function formatQueryParams(parameters) {
+function formatQueryParams (parameters) {
   const queryItems = Object.keys(parameters)
     .map(key => `${key}=${parameters[key]}`);
   return queryItems.join('&');
 }
 
-async function getLocationWeather(query) {
+async function getLocationWeather (query) {
   const weatherParams = {  //creating weather parameter object passing in the user location as a query
     q: query,
     key: config.weatherApiKey //pulling weather api key from config file
@@ -36,7 +36,6 @@ async function getLocationWeather(query) {
 }
 
 function createPlaylistFromCondition () {
-  console.log(STORE);
   if (STORE.weatherData.current.condition.code < 1010 && STORE.weatherData.current.temp_f > 38 && STORE.weatherData.current.is_day === 1) {
     findGoodVibePlaylist(STORE);
   } else if (STORE.weatherData.current.condition.code < 1010 && STORE.weatherData.current.is_day === 0) {
@@ -47,7 +46,7 @@ function createPlaylistFromCondition () {
 }
 
 /*David ------------------------------------------------------------------------------------------------------------*/
-function renderWeatherHtml(){
+function renderWeatherHtml (){
 
   let screenInjection =  
                           `<div class="weatherApiInfo">
@@ -110,14 +109,14 @@ async function fetchYelp (latitude, longitude, categories, term, limit) {
   }
 }
 
-function displayFoodServices(){
+function displayFoodServices () {
   return `<div class ="food-delivery">
   <a href="https://grubhub.com" target="blank"><img class="food-delivery-image" src="images/grubhub.jpg" ></a>
   <a href="https://ubereats.com" target="blank"><img class="food-delivery-image" src="images/ubereats.png" ></a>
   </div>`;
 }
 
-function checkWeather(){
+function checkWeather () {
   if (STORE.weatherData.current.condition.code < 1010 && STORE.weatherData.current.temp_f > 38 && STORE.weatherData.current.is_day === 1){
     return 'good';
   } 
@@ -127,7 +126,7 @@ function checkWeather(){
   return 'bad';
 }
 
-function renderResults(){
+function renderResults () {
   const weather = renderWeatherHtml();
   const title = displayTitle();
   const yelpResults = renderYelpResults();
@@ -145,14 +144,14 @@ function renderResults(){
   return html
 }
 
-function displayResults(){
+function displayResults () {
   $('.screens').html((renderResults()));
   let artDisplay = displayGallery();
   console.log(artDisplay);
   $('.screens').append(artDisplay);
 }
 
-function getYelpQueries(){
+function getYelpQueries (){
   if (checkWeather() === 'good'){
     return ['parks', 'parks', 'food', 'food'];
   }
@@ -162,7 +161,7 @@ function getYelpQueries(){
   return ['coffee', 'coffee'];
 }
 
-function displayTitle(){
+function displayTitle (){
   if (checkWeather() === 'good'){
     return `<h3>It's a nice day out, check out some local food or parks!</h3>`;
   }
@@ -259,9 +258,10 @@ function renderYelpResults() {
   
  let results = STORE.yelpData.businesses.map(i => 
   `<div class ="slide" >
-    <p>${i.name}</p>
+    <h4>${i.name}</h4>
     <img class="yelpImg" src="${i.image_url}" >
-  </div>`);
+    ${i.location.display_address.map(i => `<p>${i}</p>`).join('')}
+  </div>`).join('');
 
 
   results = `<div class="slider">
@@ -273,7 +273,7 @@ function renderYelpResults() {
   return results;
 }
 
-function watchForm() {
+function watchForm () {
   $('form').submit(event => {
     event.preventDefault();
     galleryPOST();
