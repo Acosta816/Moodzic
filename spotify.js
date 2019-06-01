@@ -31,7 +31,7 @@ function getToken (userCode) {
     "data": {
       "grant_type": "authorization_code",
       "code": `${userCode}`,
-      "redirect_uri": "http://127.0.0.1:5500/index.html"
+      "redirect_uri": "https://jydalr.github.io/Moodzic/index.html"
     }
   }
   $.ajax(settings).done(function (response) {
