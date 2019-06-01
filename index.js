@@ -145,10 +145,9 @@ function renderResults () {
 }
 
 function displayResults () {
-  $('.screens').html((renderResults()));
-  let artDisplay = displayGallery();
-  console.log(artDisplay);
-  $('.screens').append(artDisplay);
+  $('.screens').html(renderResults());
+  displayGallery();
+  $('.screens').append(displayGallery());
 }
 
 function getYelpQueries (){
@@ -282,4 +281,5 @@ function watchForm () {
   });
 }
 
+$(displayGallery);
 $(watchForm);
