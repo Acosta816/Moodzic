@@ -49,8 +49,8 @@ function createPlaylistFromCondition () {
 /*David ------------------------------------------------------------------------------------------------------------*/
 function renderWeatherHtml(){
 
-  let screenInjection = `
-                          <div class="weatherApiInfo">
+  let screenInjection =  
+                          `<div class="weatherApiInfo">
                             <div class="placeAndDate">
                               <h3>${STORE.weatherData.location.name}, ${STORE.weatherData.location.region}<h3>
                               <p>${STORE.weatherData.location.localtime}, <span>${STORE.weatherData.current.condition.text}</span> </p>
@@ -64,7 +64,7 @@ function renderWeatherHtml(){
 
   return screenInjection;
 }
-/*David----------------------------------------------------------------------------------------------------------------------*/
+
 function displayLocation () {
   const lat = STORE.weatherData.location.lat;
   const lon = STORE.weatherData.location.lon;
@@ -147,6 +147,9 @@ function renderResults(){
 
 function displayResults(){
   $('.screens').html((renderResults()));
+  let artDisplay = displayGallery();
+  console.log(artDisplay);
+  $('.screens').append(artDisplay);
 }
 
 function getYelpQueries(){
@@ -166,8 +169,91 @@ function displayTitle(){
   if (checkWeather() === 'good-night'){
     return `<h3 class="suggestionHeader">It's a clear night, how about checking out some of these local bars!</h3>`;
   }
+  galleryFetch(); //calling gallery code
   return `<h3>It's not so nice out, check out some of these local coffee shops or order food from these delivery services</h3>`;
 }
+
+//-----------------------------------------------------------------***********Gallery Code START*****-------
+ function galleryPOST() {
+  
+    const galleryPOSTParams = {  
+      client_id: config.galClientID,
+      client_secret: config.galClientSecret 
+    };
+    const galPostQueryString = formatQueryParams(galleryPOSTParams);
+    
+let galPostSettings = {
+  "async": true,
+  "crossDomain": true,
+  "url": `https://api.artsy.net/api/tokens/xapp_token?${galPostQueryString}`,
+  "method": "POST"
+}
+
+$.ajax(galPostSettings).done(function (galPostToken) {
+  config.galApiKey = galPostToken.token;
+  console.log(config.galApiKey);
+});
+
+galleryFetch();
+}
+
+let galleryPieces = [];
+
+ function galleryFetch() {
+
+  for(let i=0; i<6; i++){
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "https://api.artsy.net/api/artworks?sample=",
+      "method": "GET",
+      "headers": {
+        "X-Xapp-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IiIsImV4cCI6MTU1OTg3NzYxNSwiaWF0IjoxNTU5MjcyODE1LCJhdWQiOiI1Y2YwMDA1MzFlM2U5MjE4Yjg0YTMyYjEiLCJpc3MiOiJHcmF2aXR5IiwianRpIjoiNWNmMDlkNmYyZDk1YmMwMDExNWUxNjgwIn0.SkaD3E_-S9-51NcM-bOyhL71NKhCf3ZMqEM93hxycSo",
+        
+      }
+    }
+  
+  $.ajax(settings).done(function (galJson) {
+    galleryPieces.push(galJson);
+    
+  });
+
+} 
+//end of for loop
+console.log(galleryPieces.length);
+
+} //END OF GALLERY FETCH
+
+function displayGallery(){
+
+    let galResults = ``;
+  for(let i=0; i<galleryPieces.length; i++){
+  
+    galResults += 
+    `<div class ="slide" >
+      <p>${galleryPieces[i].slug }</p>
+      <img class="yelpImg" src="${galleryPieces[i]._links.thumbnail.href}" >
+    </div>`
+  ;
+  
+};//end of loop
+  
+  
+  console.log("this is it" + galResults);
+    galResults = `<h3>Here you go, some culture</h3>
+                  <div class="slider">
+                  <div class ="slidePads"></div>
+                  ${galResults}
+                  <div class ="slidePads"></div>
+                </div>`;
+  
+    return galResults;
+  }
+
+
+//-------------------------------------------------------------------------Gallery Code END**********
+
+
 
 function renderYelpResults() {
   
@@ -190,6 +276,7 @@ function renderYelpResults() {
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
+    galleryPOST();
     const location = $('#js-location').val(); //taking user input and assigning to "location" variable
     getLocationWeather(location); //calling the getLocationWeather and passing user's location in
   });

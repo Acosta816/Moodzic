@@ -109,6 +109,17 @@ function findGetLitPlaylist(store) {
 }
 
 
+//---------------------------------------------------------------------------Music Pop-Out Menu____START*****
+/* Set the width of the side navigation to 250px */
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+
+/* Set the width of the side navigation to 0 */
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+//---------------------------------------------------------------------------Music Pop-Out Menu____END*****
 
 
 // async function startPlay(uri) {
