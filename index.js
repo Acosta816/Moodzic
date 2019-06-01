@@ -231,7 +231,7 @@ function displayGallery(){
   
     galResults += 
     `<div class ="slide" >
-      <p>${galleryPieces[i].slug }</p>
+      <p>${galleryPieces[i].title }</p>
       <img class="yelpImg" src="${galleryPieces[i]._links.thumbnail.href}" >
     </div>`
   ;
