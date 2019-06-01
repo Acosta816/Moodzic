@@ -16,12 +16,13 @@ background-color: #1a2661;
 .overlay {
   position: fixed;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
   width: 100%;
   height: 100%;
   opacity: .85;
-  background-color: rgba(111, 199, 194, 0.36);
+  background-color: #1a2661;
   z-index: 3;
   transform: translate(-50%,-50%);
   top: 50%;
@@ -39,12 +40,10 @@ background-color: #1a2661;
 }
 
 .notUsingSpot {
-margin-top: 5rem;
-width: 50%;
-background: white;
-font-size: 20px;
-color: black;
-font-family: 'Comfortaa', cursive;
+  margin-top: 40px;
+  width: 50%;
+  background: #1a2661;
+  font-size: 20px
 }
 
 .secondSpotLogin{
@@ -55,13 +54,13 @@ font-family: 'Comfortaa', cursive;
 }
 
 .spotify-img {
-  height: 125px;
-  margin-top: 8%;
+  width: 125px;
+  margin-top: 5%;
   border-radius: 50%;
   box-shadow: 
-    0 0 1px 1px #fff, 
-    0 0 4px 4px #f0f, 
-    0 0 8px 8px #0ff; 
+    0 0 1px 1px #1DB954, 
+    0 0 4px 4px #1DB954, 
+    0 0 8px 8px #1DB954; 
   animation: animate 3s linear infinite;
 }
 
@@ -71,26 +70,26 @@ font-family: 'Comfortaa', cursive;
 
 @keyframes animate {
   0%{
-  opacity: .7;
-  }
-  40%{
-    box-shadow: 
-    0 0 0 1px rgba(0, 0, 0, 0),
-    0 0 0 4px rgba(0, 0, 0, 0),
-    0 0 0 8px rgba(0, 0, 0, 0);
-  }
-  80%{
-    box-shadow: 
-    0 0 0 1px rgba(0, 0, 0, 0),
-    0 0 0 4px rgba(0, 0, 0, 0),
-    0 0 0 8px rgba(0, 0, 0, 0);
-  }
-  100%{
-    box-shadow: 
-    0 0 1px 1px rgba(#fff, 0),
-    0 0 4px 4px rgba(#f0f, 0),
-    0 0 8px 8px rgba(#0ff, 0);
-  }
+    opacity: .7;
+    }
+    40%{
+      box-shadow: 
+      0 0 0 1px rgba(0, 0, 0, 0),
+      0 0 0 4px rgba(0, 0, 0, 0),
+      0 0 0 8px rgba(0, 0, 0, 0);
+    }
+    80%{
+      box-shadow: 
+      0 0 0 1px rgba(0, 0, 0, 0),
+      0 0 0 4px rgba(0, 0, 0, 0),
+      0 0 0 8px rgba(0, 0, 0, 0);
+    }
+    100%{
+      box-shadow: 
+      0 0 1px 1px rgba(#fff, 0),
+      0 0 4px 4px rgba(#1DB954, 0),
+      0 0 8px 8px rgba(#1DB954, 0);
+    }
 }
 
 
@@ -392,6 +391,10 @@ footer ul {
   list-style-type: none;
 }
 
+.spotify-img:hover, .notUsingSpot:hover {
+  cursor: pointer;
+}
+
 /* This is the styling for the Services ----------------------------START*/
 .slider {
   display: flex;
@@ -440,12 +443,6 @@ footer ul {
 
 
 @media(min-width:400px) {
-  .spotify-img {
-    height: 180px;
-    width: 180px;
-    margin-top: 4rem;
-    margin-bottom: 1rem;
-  }
 
 }
 
@@ -504,43 +501,14 @@ footer ul {
 
   .notUsingSpot {
     margin-top: 2rem;
-    width: 20%;
     font-family: 'Comfortaa', cursive;
   }
 
   .spotify-img {
     height: 150px;
     width: 150px;
-    margin-top: 3%;
-    margin-bottom: 5rem;
-    border-radius: 50%;
-    box-shadow: 0 0 60px 30px #fff, 0 0 100px 60px #f0f, 0 0 140px 90px #0ff;
-    animation: animate 3s linear infinite;
   }
 
-  @keyframes animate {
-    0%{
-    opacity: .7;
-    }
-    40%{
-      box-shadow: 
-      0 0 0 30px rgba(0, 0, 0, 0),
-      0 0 0 60px rgba(0, 0, 0, 0),
-      0 0 0 90px rgba(0, 0, 0, 0);
-    }
-    80%{
-      box-shadow: 
-      0 0 0 30px rgba(0, 0, 0, 0),
-      0 0 0 60px rgba(0, 0, 0, 0),
-      0 0 0 90px rgba(0, 0, 0, 0);
-    }
-    100%{
-      box-shadow: 
-      0 0 60px 30px rgba(#fff, 0),
-      0 0 100px 60px rgba(#f0f, 0),
-      0 0 140px 90px rgba(#0ff, 0);
-    }
-  }
 }
 
 @media(min-width:800px){
@@ -575,7 +543,6 @@ footer ul {
 
   .notUsingSpot {
     margin-top: 2rem;
-    width: 20%;
     font-family: 'Comfortaa', cursive;
   }
 

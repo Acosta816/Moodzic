@@ -31,7 +31,7 @@ function getToken (userCode) {
     "data": {
       "grant_type": "authorization_code",
       "code": `${userCode}`,
-      "redirect_uri": "https://lrussell13.github.io/Moodzic/index.html"
+      "redirect_uri": "http://127.0.0.1:5500/index.html"
     }
   }
   $.ajax(settings).done(function (response) {
@@ -53,6 +53,7 @@ async function findCurrentUser(response) {
   try {
     const response = await fetch (`https://api.spotify.com/v1/me`, authorization);
     const userjson = response.json();
+    console.log(userjson);
   }
   catch(err) {
     console.log(err);
