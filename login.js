@@ -12,7 +12,6 @@ $(clickNotUsingSpot);
 function initLogin() {
   const x = location.search;
   const code = x.slice(6);
-  console.log(code);
   if (code.length > 1) {
     setOverLayDisplayNone();
     setBackgroundImg();

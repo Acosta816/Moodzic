@@ -52,6 +52,10 @@ font-size: 20px
   animation: animate 3s linear infinite;
 }
 
+.spotify-img:hover, .notUsingSpot:hover {
+  cursor: pointer;
+}
+
 @keyframes animate {
   0%{
   opacity: .7;
@@ -327,6 +331,10 @@ color: #ff0000;
   text-shadow: 0 0 7px #f5f1f1;
 }
 
+.goButton:hover {
+  cursor: pointer;
+}
+
 .screens  {
 display:flex;
 flex-flow: column;
@@ -359,11 +367,6 @@ h2 img {
 .food-delivery img {
   width: 85px;
   margin: 15px;
-}
-
-.suggestionHeader {
-  background-color: #3a0000e0;
-  border: black solid 2px;
 }
 
 footer ul {
@@ -406,6 +409,13 @@ footer ul {
   height: 3em;
 }
 
+.slide a {
+  text-decoration: none;
+}
+
+.slide a:hover {
+  cursor: pointer;
+}
 
 /* This is the styling for the Services ----------------------------END*/
 
@@ -438,7 +448,6 @@ h1 {
 
 h3 {
   font-size: 28px;
-  text-decoration: underline;
 }
 
 h4 {

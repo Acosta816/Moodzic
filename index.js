@@ -36,7 +36,6 @@ async function getLocationWeather(query) {
 }
 
 function createPlaylistFromCondition () {
-  console.log(STORE);
   if (STORE.weatherData.current.condition.code < 1010 && STORE.weatherData.current.temp_f > 38 && STORE.weatherData.current.is_day === 1) {
     findGoodVibePlaylist(STORE);
   } else if (STORE.weatherData.current.condition.code < 1010 && STORE.weatherData.current.is_day === 0) {
@@ -170,11 +169,10 @@ function displayTitle(){
 }
 
 function renderYelpResults() {
-  console.log(STORE.yelpData.businesses);
   
  let results = STORE.yelpData.businesses.map(i => 
   `<div class ="slide" >
-    <h4>${i.name}</h4>
+    <a href="${i.url}"><h4>${i.name}</h4></a>
     <img class="yelpImg" src="${i.image_url}" >
     ${i.location.display_address.map(i => `<p>${i}</p>`).join('')}
   </div>`).join('');

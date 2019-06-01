@@ -53,7 +53,6 @@ async function findCurrentUser(response) {
   try {
     const response = await fetch (`https://api.spotify.com/v1/me`, authorization);
     const userjson = response.json();
-    console.log(userjson);
   }
   catch(err) {
     console.log(err);
