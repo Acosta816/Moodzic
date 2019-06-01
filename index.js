@@ -1,5 +1,5 @@
 'use strict';
-
+var galleryPieces = [];
 const searchURL = 'https://api.apixu.com/v1/current.json'; //weather api base url endpoint
 
 function formatQueryParams (parameters) {
@@ -146,8 +146,7 @@ function renderResults () {
 
 function displayResults () {
   $('.screens').html(renderResults());
-  displayGallery();
-  $('.screens').append(displayGallery());
+  // $('.screens').append(displayGallery());
 }
 
 function getYelpQueries (){
@@ -195,7 +194,7 @@ $.ajax(galPostSettings).done(function (galPostToken) {
 galleryFetch();
 }
 
-let galleryPieces = [];
+
 
  function galleryFetch() {
 
@@ -237,7 +236,6 @@ function displayGallery(){
 };//end of loop
   
   
-  console.log("this is it" + galResults);
     galResults = `<h3>Here you go, some culture</h3>
                   <div class="slider">
                   <div class ="slidePads"></div>
@@ -281,5 +279,7 @@ function watchForm () {
   });
 }
 
-$(displayGallery);
 $(watchForm);
+
+// $('.screens').append(displayGallery());
+//CALL THIS FUNCTION ONCE EVERYTHING HAS BEEN THERE A WHILE(sill buggy)
