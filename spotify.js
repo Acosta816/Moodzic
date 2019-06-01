@@ -5,7 +5,7 @@
 })();
 
 function loginSpot () {
-  window.location=`https://accounts.spotify.com/authorize?client_id=40fb8cf91894461186ea39861c0c1710&response_type=code&redirect_uri=http://lrussell13.github.io/Moodzic/index.html&scope=user-top-read&show_dialog=true`;
+  window.location=`https://accounts.spotify.com/authorize?client_id=40fb8cf91894461186ea39861c0c1710&response_type=code&redirect_uri=https://lrussell13.github.io/Moodzic/index.html&scope=user-top-read&show_dialog=true`;
 }
   
 function getUserCode() {
