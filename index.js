@@ -168,10 +168,11 @@ function displayTitle (){
   return `<h3>It's not so nice out, check out some of these local coffee shops or order food from these delivery services</h3>`;
 }
 
-function renderYelpResults () {
+function renderYelpResults() {
+  
  let results = STORE.yelpData.businesses.map(i => 
   `<div class ="slide" >
-    <h4>${i.name}</h4>
+    <a target="_blank" href="${i.url}"><h4>${i.name}</h4></a>
     <img class="yelpImg" src="${i.image_url}" >
     ${i.location.display_address.map(i => `<p>${i}</p>`).join('')}
   </div>`).join('');
