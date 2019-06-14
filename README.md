@@ -14,6 +14,6 @@ Moodzic is a weather-based music player app. After logging into Spotify from the
 * HTML
 * JQuery
 * API’s used:
-  * APIUX - Weather
+  * APIXU - Weather
   * Spotify - Music
   * Yelp - Local Restaurants, Parks

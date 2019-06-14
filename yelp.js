@@ -1,7 +1,6 @@
 function clickOnYelpPic () {
   $('.screens').on('click', '.yelpImg', function (event) {
     let yelpImgUrl = $(this).closest('.screens').find('.yelpImg').attr('src');
-    console.log(yelpImgUrl)
     let clickYelp = STORE.yelpData.businesses.find(arr => arr.image_url === yelpImgUrl);
     openNewWindow(clickYelp);
   })
