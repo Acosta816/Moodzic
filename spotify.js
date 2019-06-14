@@ -53,7 +53,6 @@ async function findCurrentUser(response) {
   try {
     const response = await fetch (`https://api.spotify.com/v1/me`, authorization);
     const userjson = response.json();
-    console.log(userjson);
   }
   catch(err) {
     console.log(err);
@@ -106,30 +105,3 @@ function findGetLitPlaylist(store) {
   const litId = lit.id;
   appendMusicButton(litId);
 }
-
-
-
-
-
-
-// async function startPlay(uri) {
-
-//     console.log(uri);
-
-//     const authorization = {
-//         method: 'PUT',
-//         body: JSON.stringify({context_uri: `${uri}`}),
-//         headers: {
-//         'Authorization': `Bearer ${STORE.spotifytoken}`
-//         }
-//     }
-
-//   try {
-//     const response = await fetch('https://api.spotify.com/v1/me/player/play', authorization)
-//     const responsejson = await response.json();
-//     console.log(responsejson);
-//   }
-//   catch(err) {
-//     console.log(err);
-//   }
-// }
