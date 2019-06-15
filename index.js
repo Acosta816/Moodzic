@@ -26,7 +26,6 @@ async function getLocationWeather (query) {
     $('#mySidenav').find('h4').text(`${textVal} Playlist`);
     STORE.weatherData = responseJson;
     displayLocation();
-    createPlaylistFromCondition();
   }
   catch(err) {
     console.error(err);
@@ -45,17 +44,17 @@ function createPlaylistFromCondition () {
 
 function renderWeatherHtml () {
   let screenInjection = `
-                          <div class="weatherApiInfo">
-                            <div class="placeAndDate">
-                              <h3>${STORE.weatherData.location.name}, ${STORE.weatherData.location.region}<h3>
-                              <p>${STORE.weatherData.location.localtime}, <span>${STORE.weatherData.current.condition.text}</span> </p>
-                            </div>
-                            <div class="tempAndIcon">
-                              <img src="${STORE.weatherData.current.condition.icon}">
-                              <h2>${STORE.weatherData.current.temp_f}F</h2>
-                            </div>  
-                          </div>
-                          `;
+    <div class="weatherApiInfo">
+      <div class="placeAndDate">
+        <h3>${STORE.weatherData.location.name}, ${STORE.weatherData.location.region}<h3>
+        <p>${STORE.weatherData.location.localtime}, <span>${STORE.weatherData.current.condition.text}</span> </p>
+      </div>
+      <div class="tempAndIcon">
+        <img src="${STORE.weatherData.current.condition.icon}">
+        <h2>${STORE.weatherData.current.temp_f}F</h2>
+      </div>  
+    </div>
+    `;
 
   return screenInjection;
 }

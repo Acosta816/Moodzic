@@ -71,6 +71,7 @@ async function getUserPlaylist (response) {
     const response = await fetch ('https://api.spotify.com/v1/users/1224174868/playlists', authorization);
     const playlist = await response.json();
     STORE.spotifyPlaylist = playlist;
+    createPlaylistFromCondition();
   }
   catch(err) {
     console.log(err);
@@ -87,6 +88,7 @@ function appendMusicButton (uriId) {
 
   
 function findGoodVibePlaylist(store) {
+  console.log(store);
   const goodVibe = store.spotifyPlaylist.items.find(name => name.name === "Good Vibe Moodsic");
   const goodVibeId = goodVibe.id;
   const goodVibeuri = goodVibe.uri;
