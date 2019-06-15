@@ -5,7 +5,7 @@
 })();
 
 function loginSpot () {
-  window.location=`https://accounts.spotify.com/authorize?client_id=40fb8cf91894461186ea39861c0c1710&response_type=code&redirect_uri=https://jydalr.github.io/Moodzic/index.html&scope=user-top-read%20user-read-private%20user-read-email&show_dialog=true`;
+  window.location=`https://accounts.spotify.com/authorize?client_id=40fb8cf91894461186ea39861c0c1710&response_type=code&redirect_uri=https://jyin25.github.io/Moodzic/&scope=user-top-read%20user-read-private%20user-read-email&show_dialog=true`;
 }
   
 function getUserCode() {
@@ -31,7 +31,7 @@ function getToken (userCode) {
     "data": {
       "grant_type": "authorization_code",
       "code": `${userCode}`,
-      "redirect_uri": "https://jydalr.github.io/Moodzic/index.html"
+      "redirect_uri": "https://jyin25.github.io/Moodzic/"
     }
   }
   $.ajax(settings).done(function (response) {
