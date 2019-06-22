@@ -61,7 +61,6 @@ async function findCurrentUser(response) {
   
 async function getUserPlaylist (response) {
   const token = response.access_token;
-  console.log(token);
   const authorization = {
     headers: {
       'Authorization': `Bearer ${token}`
