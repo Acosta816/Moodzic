@@ -61,6 +61,7 @@ async function findCurrentUser(response) {
   
 async function getUserPlaylist (response) {
   const token = response.access_token;
+  console.log(token);
   const authorization = {
     headers: {
       'Authorization': `Bearer ${token}`
@@ -71,7 +72,6 @@ async function getUserPlaylist (response) {
     const response = await fetch ('https://api.spotify.com/v1/users/1224174868/playlists', authorization);
     const playlist = await response.json();
     STORE.spotifyPlaylist = playlist;
-    createPlaylistFromCondition();
   }
   catch(err) {
     console.log(err);
@@ -87,23 +87,22 @@ function appendMusicButton (uriId) {
 
 
   
-function findGoodVibePlaylist(store) {
-  console.log(store);
-  const goodVibe = store.spotifyPlaylist.items.find(name => name.name === "Good Vibe Moodsic");
+function findGoodVibePlaylist() {
+  const goodVibe = STORE.spotifyPlaylist.items.find(name => name.name === "Good Vibe Moodsic");
   const goodVibeId = goodVibe.id;
   const goodVibeuri = goodVibe.uri;
   appendMusicButton(goodVibeId);
 
 }
 
-function findFeelsPlaylist(store) {
-  const feels = store.spotifyPlaylist.items.find(name => name.name === "Feels");
+function findFeelsPlaylist() {
+  const feels = STORE.spotifyPlaylist.items.find(name => name.name === "Feels");
   const feelsId = feels.id;
   appendMusicButton(feelsId);
 }
 
-function findGetLitPlaylist(store) {
-  const lit = store.spotifyPlaylist.items.find(name => name.name === "Get Lit");
+function findGetLitPlaylist() {
+  const lit = STORE.spotifyPlaylist.items.find(name => name.name === "Get Lit");
   const litId = lit.id;
   appendMusicButton(litId);
 }

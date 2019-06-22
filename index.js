@@ -26,6 +26,7 @@ async function getLocationWeather (query) {
     $('#mySidenav').find('h4').text(`${textVal} Playlist`);
     STORE.weatherData = responseJson;
     displayLocation();
+    createPlaylistFromCondition();
   }
   catch(err) {
     console.error(err);
@@ -34,11 +35,11 @@ async function getLocationWeather (query) {
 
 function createPlaylistFromCondition () {
   if (STORE.weatherData.current.condition.code < 1010 && STORE.weatherData.current.temp_f > 38 && STORE.weatherData.current.is_day === 1) {
-    findGoodVibePlaylist(STORE);
+    findGoodVibePlaylist();
   } else if (STORE.weatherData.current.condition.code < 1010 && STORE.weatherData.current.is_day === 0) {
-    findGetLitPlaylist(STORE);
+    findGetLitPlaylist();
   } else {
-    findFeelsPlaylist(STORE)
+    findFeelsPlaylist()
   }
 }
 
