@@ -70,7 +70,6 @@ async function getUserPlaylist (response) {
   try {
     const response = await fetch ('https://api.spotify.com/v1/users/1224174868/playlists', authorization);
     const playlist = await response.json();
-    console.log(playlist)
     STORE.spotifyPlaylist = playlist;
   }
   catch(err) {

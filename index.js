@@ -1,6 +1,6 @@
 'use strict';
 
-const searchURL = 'https://api.weatherstack.com/current'; 
+const searchURL = 'http://api.weatherstack.com/current'; 
 
 function formatQueryParams (parameters) {
   const queryItems = Object.keys(parameters)
@@ -19,7 +19,8 @@ async function getLocationWeather (query) {
 
   try {
     const response = await fetch (finalWeatherUrl); 
-    const responseJson = await response.json(); 
+    const responseJson = await response.json();
+    console.log(responseJson)
     let iconVal = responseJson.current.weather_icons[0]; 
     let textVal = responseJson.current.weather_descriptions[0]; 
     $('#playListClimate').closest('img').attr('src',iconVal);
