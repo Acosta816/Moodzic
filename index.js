@@ -1,6 +1,6 @@
 'use strict';
 
-const searchURL = 'https://api.apixu.com/v1/current.json'; 
+const searchURL = 'http://api.weatherstack.com/current'; 
 
 function formatQueryParams (parameters) {
   const queryItems = Object.keys(parameters)
@@ -10,8 +10,8 @@ function formatQueryParams (parameters) {
 
 async function getLocationWeather (query) {
   const weatherParams = {  
-    q: query,
-    key: config.weatherApiKey 
+    query: query,
+    access_key: config.weatherApiKey 
   };
 
   const queryString = formatQueryParams(weatherParams)  
@@ -20,8 +20,8 @@ async function getLocationWeather (query) {
   try {
     const response = await fetch (finalWeatherUrl); 
     const responseJson = await response.json(); 
-    let iconVal = responseJson.current.condition.icon; 
-    let textVal = responseJson.current.condition.text; 
+    let iconVal = responseJson.current.weather_icons[0]; 
+    let textVal = responseJson.current.weather_descriptions[0]; 
     $('#playListClimate').closest('img').attr('src',iconVal);
     $('#mySidenav').find('h4').text(`${textVal} Playlist`);
     STORE.weatherData = responseJson;
@@ -34,9 +34,9 @@ async function getLocationWeather (query) {
 }
 
 function createPlaylistFromCondition () {
-  if (STORE.weatherData.current.condition.code < 1010 && STORE.weatherData.current.temp_f > 38 && STORE.weatherData.current.is_day === 1) {
+  if (STORE.weatherData.current.weather_code < 1010 && STORE.weatherData.current.temperature > 30 && STORE.weatherData.current.is_day === "yes") {
     findGoodVibePlaylist();
-  } else if (STORE.weatherData.current.condition.code < 1010 && STORE.weatherData.current.is_day === 0) {
+  } else if (STORE.weatherData.current.weather_code < 1010 && STORE.weatherData.current.is_day === "no") {
     findGetLitPlaylist();
   } else {
     findFeelsPlaylist()
@@ -48,11 +48,11 @@ function renderWeatherHtml () {
     <div class="weatherApiInfo">
       <div class="placeAndDate">
         <h3>${STORE.weatherData.location.name}, ${STORE.weatherData.location.region}<h3>
-        <p>${STORE.weatherData.location.localtime}, <span>${STORE.weatherData.current.condition.text}</span> </p>
+        <p>${STORE.weatherData.location.localtime}, <span>${STORE.weatherData.current.weather_descriptions[0]}</span> </p>
       </div>
       <div class="tempAndIcon">
-        <img src="${STORE.weatherData.current.condition.icon}">
-        <h2>${STORE.weatherData.current.temp_f}F</h2>
+        <img src="${STORE.weatherData.current.weather_icons[0]}">
+        <h2>${STORE.weatherData.current.temperature}F</h2>
       </div>  
     </div>
     `;
@@ -112,10 +112,10 @@ function displayFoodServices () {
 }
 
 function checkWeather () {
-  if (STORE.weatherData.current.condition.code < 1010 && STORE.weatherData.current.temp_f > 38 && STORE.weatherData.current.is_day === 1){
+  if (STORE.weatherData.current.weather_code < 1010 && STORE.weatherData.current.temperature > 38 && STORE.weatherData.current.is_day === "yes"){
     return 'good';
   } 
-  if (STORE.weatherData.current.condition.code < 1010 && STORE.weatherData.current.is_day === 0){
+  if (STORE.weatherData.current.weather_code < 1010 && STORE.weatherData.current.is_day === "no"){
     return 'good-night';
   }
   return 'bad';
@@ -165,7 +165,7 @@ function displayTitle () {
 function renderYelpResults () {
   
  let results = STORE.yelpData.businesses.map(i => 
-  `<div class ="slide" >
+  `<div >
     <a target="_blank" href="${i.url}"><h4>${i.name}</h4></a>
     <img class="yelpImg" src="${i.image_url}" >
     <div class="yelpTextContainer">
@@ -174,10 +174,9 @@ function renderYelpResults () {
   </div>`).join('');
 
   results = `
-    <div class="slider">
-    <div class ="slidePads"></div>
+    <div>
+
     ${results}
-    <div class ="slidePads"></div>
     </div>
   `;
 

@@ -22,7 +22,7 @@ $(initLogin);
 
 function clickOnIcon () {
   $('.overlay').on('click', 'img', function (event) {
-    window.location=`https://accounts.spotify.com/authorize?client_id=40fb8cf91894461186ea39861c0c1710&response_type=code&redirect_uri=https://jyin25.github.io/Moodzic/&scope=user-top-read&show_dialog=true`;
+    window.location=`https://accounts.spotify.com/authorize?client_id=40fb8cf91894461186ea39861c0c1710&response_type=code&redirect_uri=https://jyin25.github.io/Moodzic/`;
   })
 }
 
