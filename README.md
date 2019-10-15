@@ -1,7 +1,7 @@
 # Moodzic
 
 ## Live App:
-https://jydalr.github.io/Moodzic/
+https://jyin25.github.io/Moodzic/
 
 ![screenshots](images/readme-image.png)
 
