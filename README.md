@@ -17,3 +17,10 @@ Moodzic is a weather-based music player app. After logging into Spotify from the
   * APIXU - Weather
   * Spotify - Music
   * Yelp - Local Restaurants, Parks
+
+## Usage
+> - Download the Repo.
+> - Login with your Spotify username and password.
+> - Once logged-Search for your location
+> - App will generate a music playlist based on the weather
+> - App will give you a list of activities to do based on the weather
