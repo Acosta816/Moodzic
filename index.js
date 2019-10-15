@@ -1,6 +1,6 @@
 'use strict';
 
-const searchURL = 'https://api.weatherstack.com/current'; 
+const searchURL = 'http://api.weatherstack.com/current'; 
 
 function formatQueryParams (parameters) {
   const queryItems = Object.keys(parameters)
