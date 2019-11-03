@@ -94,7 +94,6 @@ function findGoodVibePlaylist() {
 }
 
 function findFeelsPlaylist() {
-  console.log(STORE)
   const feels = STORE.spotifyPlaylist.items.find(name => name.name === "Feels");
   const feelsId = feels.id;
   appendMusicButton(feelsId);
