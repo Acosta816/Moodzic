@@ -31,7 +31,7 @@ function getToken (userCode) {
     "data": {
       "grant_type": "authorization_code",
       "code": `${userCode}`,
-      "redirect_uri": "http://jyin25.com"
+      "redirect_uri": "http://www.jyin25.com"
     }
   }
   $.ajax(settings).done(function (response) {
