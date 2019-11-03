@@ -11,7 +11,6 @@ function loginSpot () {
 function getUserCode() {
   const x = location.search;
   const code = x.slice(6);
-  console.log(x)
   if (code.length > 1) {
     getToken(code);
   }
