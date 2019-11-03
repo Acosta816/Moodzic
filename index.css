@@ -151,10 +151,6 @@ body {
   font-size: 1.7rem;
 }
 
-.tempAndIcon img {
-  margin-top: -17px;
-  padding-bottom: 8px;
-}
 
 .cloudName {
   z-index: -1;
