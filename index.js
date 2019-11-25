@@ -174,7 +174,7 @@ function renderYelpResults () {
   </div>`).join('');
 
   results = `
-    <div>
+    <div class="yelp-result">
 
     ${results}
     </div>
