@@ -12,6 +12,12 @@ html {
   text-align: center;
 }
 
+.yelp-result {
+  display: flex;
+  justify-content: space-evenly;
+  flex-flow: wrap;
+}
+
 .overlay {
   position: fixed;
   display: flex;
