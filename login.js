@@ -35,9 +35,9 @@ function setOverLayDisplayNone () {
 
 function setBackgroundImg () {
   $('body').css('background-image', `
-  url("https://cdn.dribbble.com/users/1209414/screenshots/4468735/earth.gif"),
-  url("https://media.giphy.com/media/xB2huFLKz1SeMFO4w2/giphy.gif"),
-  url("https://media.giphy.com/media/xB2huFLKz1SeMFO4w2/giphy.gif")`);
+  url("images/earth_spinning.gif"),
+  url("images/stars_twinkle.gif"),
+  url("images/stars_twinkle.gif")`);
 }
 
 function setMainOpa () {
