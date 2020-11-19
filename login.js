@@ -10,6 +10,7 @@ $(clickNotUsingSpot);
 
 function initLogin() {
   const x = location.search;
+  console.log(location.search);
   const code = x.slice(6);
   if (code.length > 1) {
     setOverLayDisplayNone();
@@ -35,9 +36,9 @@ function setOverLayDisplayNone () {
 
 function setBackgroundImg () {
   $('body').css('background-image', `
-  url("https://cdn.dribbble.com/users/1209414/screenshots/4468735/earth.gif"),
-  url("https://media.giphy.com/media/xB2huFLKz1SeMFO4w2/giphy.gif"),
-  url("https://media.giphy.com/media/xB2huFLKz1SeMFO4w2/giphy.gif")`);
+  url("images/earth.gif"),
+  url("images/stars.gif"),
+  url("images/stars.gif")`);
 }
 
 function setMainOpa () {
