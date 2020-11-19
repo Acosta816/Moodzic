@@ -1,11 +1,6 @@
 'use strict';
-<<<<<<< HEAD
 
 const searchURL = 'http://api.weatherstack.com/current';
-=======
-var galleryPieces = [];
-const searchURL = 'https://api.apixu.com/v1/current.json'; //weather api base url endpoint
->>>>>>> 376f5a48eed4d846de5e277abf222f0ca2ce4fd7
 
 function formatQueryParams(parameters) {
   const queryItems = Object.keys(parameters)
@@ -48,7 +43,6 @@ function createPlaylistFromCondition() {
   }
 }
 
-<<<<<<< HEAD
 function renderWeatherHtml() {
   let screenInjection = `
     <div class="weatherApiInfo">
@@ -62,23 +56,6 @@ function renderWeatherHtml() {
       </div>  
     </div>
     `;
-=======
-/*David ------------------------------------------------------------------------------------------------------------*/
-function renderWeatherHtml (){
-
-  let screenInjection =
-                          `<div class="weatherApiInfo">
-                            <div class="placeAndDate">
-                              <h3>${STORE.weatherData.location.name}, ${STORE.weatherData.location.region}<h3>
-                              <p>${STORE.weatherData.location.localtime}, <span>${STORE.weatherData.current.condition.text}</span> </p>
-                            </div>
-                            <div class="tempAndIcon">
-                              <img src="${STORE.weatherData.current.condition.icon}">
-                              <h2>${STORE.weatherData.current.temp_f}F</h2>
-                            </div>
-                          </div>
-                          `;
->>>>>>> 376f5a48eed4d846de5e277abf222f0ca2ce4fd7
 
   return screenInjection;
 }
@@ -187,92 +164,7 @@ function displayTitle() {
   return `<h3>It's not so nice out, check out some of these local coffee shops or order food from these delivery services</h3>`;
 }
 
-<<<<<<< HEAD
 function renderYelpResults() {
-=======
-//-----------------------------------------------------------------***********Gallery Code START*****-------
- function galleryPOST() {
-
-    const galleryPOSTParams = {
-      client_id: config.galClientID,
-      client_secret: config.galClientSecret
-    };
-    const galPostQueryString = formatQueryParams(galleryPOSTParams);
-
-let galPostSettings = {
-  "async": true,
-  "crossDomain": true,
-  "url": `https://api.artsy.net/api/tokens/xapp_token?${galPostQueryString}`,
-  "method": "POST"
-}
-
-$.ajax(galPostSettings).done(function (galPostToken) {
-  config.galApiKey = galPostToken.token;
-  console.log(config.galApiKey);
-});
-
-galleryFetch();
-}
-
-
-
- function galleryFetch() {
-
-  for(let i=0; i<6; i++){
-    var settings = {
-      "async": true,
-      "crossDomain": true,
-      "url": "https://api.artsy.net/api/artworks?sample=",
-      "method": "GET",
-      "headers": {
-        "X-Xapp-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IiIsImV4cCI6MTU1OTg3NzYxNSwiaWF0IjoxNTU5MjcyODE1LCJhdWQiOiI1Y2YwMDA1MzFlM2U5MjE4Yjg0YTMyYjEiLCJpc3MiOiJHcmF2aXR5IiwianRpIjoiNWNmMDlkNmYyZDk1YmMwMDExNWUxNjgwIn0.SkaD3E_-S9-51NcM-bOyhL71NKhCf3ZMqEM93hxycSo",
-
-      }
-    }
-
-  $.ajax(settings).done(function (galJson) {
-    galleryPieces.push(galJson);
-
-  });
-
-}
-//end of for loop
-console.log(galleryPieces.length);
-
-} //END OF GALLERY FETCH
-
-function displayGallery(){
-
-    let galResults = ``;
-  for(let i=0; i<galleryPieces.length; i++){
-
-    galResults +=
-    `<div class ="slide" >
-      <p>${galleryPieces[i].title }</p>
-      <img class="yelpImg" src="${galleryPieces[i]._links.thumbnail.href}" >
-    </div>`
-  ;
-
-};//end of loop
-
-
-    galResults = `<h3>Here you go, some culture</h3>
-                  <div class="slider">
-                  <div class ="slidePads"></div>
-                  ${galResults}
-                  <div class ="slidePads"></div>
-                </div>`;
-
-    return galResults;
-  }
-
-
-//-------------------------------------------------------------------------Gallery Code END**********
-
-
-
-function renderYelpResults() {
->>>>>>> 376f5a48eed4d846de5e277abf222f0ca2ce4fd7
 
   let results = STORE.yelpData.businesses.map(i =>
     `<div >
@@ -296,14 +188,8 @@ function renderYelpResults() {
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
-<<<<<<< HEAD
     const location = $('#js-location').val();
     getLocationWeather(location);
-=======
-    galleryPOST();
-    const location = $('#js-location').val(); //taking user input and assigning to "location" variable
-    getLocationWeather(location); //calling the getLocationWeather and passing user's location in
->>>>>>> 376f5a48eed4d846de5e277abf222f0ca2ce4fd7
   });
 }
 
