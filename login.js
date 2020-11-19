@@ -1,4 +1,4 @@
-function clickNotUsingSpot () {
+function clickNotUsingSpot() {
   $('.overlay').on('click', 'button', function (event) {
     setOverLayDisplayNone();
     setBackgroundImg();
@@ -16,31 +16,31 @@ function initLogin() {
     setOverLayDisplayNone();
     setBackgroundImg();
     setMainOpa();
-  } 
+  }
 }
 
 $(initLogin);
 
-function clickOnIcon () {
+function clickOnIcon() {
   $('.overlay').on('click', 'img', function (event) {
-    window.location=`https://accounts.spotify.com/authorize?client_id=40fb8cf91894461186ea39861c0c1710&response_type=code&redirect_uri=http://www.jyin25.com`;
+    window.location = `https://accounts.spotify.com/authorize?client_id=40fb8cf91894461186ea39861c0c1710&response_type=code&redirect_uri=http://www.jyin25.com`;
   })
 }
 
 $(clickOnIcon);
 
-function setOverLayDisplayNone () {
+function setOverLayDisplayNone() {
   $('.overlay').css('display', 'none');
 
 }
 
-function setBackgroundImg () {
+function setBackgroundImg() {
   $('body').css('background-image', `
   url("images/earth.gif"),
   url("images/stars.gif"),
   url("images/stars.gif")`);
 }
 
-function setMainOpa () {
+function setMainOpa() {
   $('main').css('opacity', 1);
 }

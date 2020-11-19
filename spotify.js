@@ -1,13 +1,13 @@
 (function defaultPlayList() {
   const url = `<iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX1gRalH1mWrP" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe> <button class="secondSpotLogin" onclick="loginSpot()">Login with Spotify</button>`;
-  
+
   $('.music-container').html(url);
 })();
 
-function loginSpot () {
-  window.location=`https://accounts.spotify.com/authorize?client_id=40fb8cf91894461186ea39861c0c1710&response_type=code&redirect_uri=http://www.jyin25.com&scope=user-top-read%20user-read-private%20user-read-email&show_dialog=true`;
+function loginSpot() {
+  window.location = `https://accounts.spotify.com/authorize?client_id=40fb8cf91894461186ea39861c0c1710&response_type=code&redirect_uri=http://www.jyin25.com&scope=user-top-read%20user-read-private%20user-read-email&show_dialog=true`;
 }
-  
+
 function getUserCode() {
   const x = location.search;
   const code = x.slice(6);
@@ -17,8 +17,8 @@ function getUserCode() {
 }
 
 $(getUserCode);
-    
-function getToken (userCode) {
+
+function getToken(userCode) {
   const settings = {
     "async": true,
     "crossDomain": true,
@@ -38,8 +38,8 @@ function getToken (userCode) {
     getUserPlaylist(response);
   });
 }
-  
-  
+
+
 async function findCurrentUser(response) {
   const token = response.access_token;
   STORE.spotifytoken = token;
@@ -48,43 +48,43 @@ async function findCurrentUser(response) {
       'Authorization': `Bearer ${token}`
     }
   }
-  
+
   try {
-    const response = await fetch (`https://api.spotify.com/v1/me`, authorization);
+    const response = await fetch(`https://api.spotify.com/v1/me`, authorization);
     const userjson = response.json();
   }
-  catch(err) {
+  catch (err) {
     console.log(err);
   }
 }
-  
-async function getUserPlaylist (response) {
+
+async function getUserPlaylist(response) {
   const token = response.access_token;
   const authorization = {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   }
-  
+
   try {
-    const response = await fetch ('https://api.spotify.com/v1/users/1224174868/playlists', authorization);
+    const response = await fetch('https://api.spotify.com/v1/users/1224174868/playlists', authorization);
     const playlist = await response.json();
     STORE.spotifyPlaylist = playlist;
   }
-  catch(err) {
+  catch (err) {
     console.log(err);
   }
 }
-  
-function appendMusicButton (uriId) {
+
+function appendMusicButton(uriId) {
   const url = `<iframe src="https://open.spotify.com/embed/playlist/${uriId}" width="300px" height="380px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
-  
+
   $('.music-container').html(`${url}`);
 
 }
 
 
-  
+
 function findGoodVibePlaylist() {
   const goodVibe = STORE.spotifyPlaylist.items.find(name => name.name === "Good Vibe Moodsic");
   const goodVibeId = goodVibe.id;

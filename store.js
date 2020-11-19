@@ -1,3 +1,5 @@
 const STORE = {
+    
+  view: 'login'
  
 };
